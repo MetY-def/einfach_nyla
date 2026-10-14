@@ -57,7 +57,13 @@ p{color:var(--mute);margin-bottom:1rem;max-width:65ch}
 .bh h1{font-size:clamp(2rem,4.6vw,3.6rem)}.bh h1 span{color:var(--pink);text-shadow:0 0 22px #ff2d7a99}
 @media(max-width:700px){.bh{flex-direction:column;min-height:0}.bh .bhimg{width:100%;max-width:none;height:300px;object-position:center top;-webkit-mask-image:linear-gradient(to bottom,#000 62%,transparent);mask-image:linear-gradient(to bottom,#000 62%,transparent)}.bh .bht{padding:0 1.2rem 1.6rem;text-align:center}}
 .soc-row.sup{grid-template-columns:repeat(auto-fill,minmax(150px,1fr))}
-.setup{grid-template-columns:repeat(auto-fill,minmax(min(100%,340px),1fr))}
+main.wide{max-width:1500px}
+.setup{grid-template-columns:repeat(5,minmax(0,1fr));align-items:stretch}
+.setup tr{display:block;padding:.45rem 0;border-bottom:1px solid var(--line)}
+.setup td{display:block;width:auto;border:0;padding:.05rem 0;font-size:.95rem;line-height:1.35}
+.setup td:first-child{width:auto;font-size:.68rem;margin-bottom:.1rem}
+@media(max-width:1150px){.setup{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:760px){.setup{grid-template-columns:1fr}}
 .setup h3{color:var(--pink);font-size:1.1rem;margin-bottom:.6rem}
 .clip{position:relative;aspect-ratio:16/9;background:#000;border-radius:8px;overflow:hidden;margin-bottom:.8rem;cursor:pointer}
 .clip img,.clip iframe{width:100%;height:100%;border:0;object-fit:cover;display:block}
@@ -138,7 +144,7 @@ footer{text-align:center;color:var(--mute);font-size:.85rem;padding:2rem 1rem;bo
     <div class="card"><span class="tag">Regelmäßig</span><h3>Gaming</h3><p class="when"><span>Mittwoch</span>16:00 - 21:00 Uhr</p></div>
     <div class="card"><span class="tag">Regelmäßig</span><h3>Gaming</h3><p class="when"><span>Donnerstag</span>16:00 - 21:00 Uhr</p></div>
   </div>
-  <div class="row"><a class="btn alt" href="#clips">Zu den Clips</a><a class="btn" href="https://twitch.tv/einfach_nyla" target="_blank" rel="noopener">einfach_nyla auf Twitch</a></div>
+  <div class="row"><a class="btn" href="#clips">Zu den Clips</a><a class="btn" href="https://twitch.tv/einfach_nyla" target="_blank" rel="noopener">einfach_nyla auf Twitch</a></div>
 </section>
 
 <section class="page" id="clips">
@@ -270,6 +276,7 @@ function render(){
   if(!pages.includes(id)) id='home';
   document.querySelectorAll('.page').forEach(p=>p.classList.toggle('show',p.id===id));
   document.querySelectorAll('nav a').forEach(a=>a.classList.toggle('active',a.getAttribute('href')==='#'+id));
+  document.querySelector('main').classList.toggle('wide',id==='setup');
   window.scrollTo(0,0);
   if(id==='clips'&&!clipsLoaded)loadClips();
   if(alias[h]){const t=document.getElementById(h);if(t)t.scrollIntoView({behavior:'smooth'})}
