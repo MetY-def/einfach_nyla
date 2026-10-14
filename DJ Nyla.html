@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>DJ Nyla</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Rajdhani:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0a0710;--panel:#140e1f;--line:#2a1d3d;--text:#efe9f7;--mute:#a597bb;--pink:#ff2d7a;--cyan:#27e1ff;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:light){:root:not([data-theme="dark"]){--bg:#0a0710}}
+*{box-sizing:border-box;margin:0}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{background:var(--bg);color:var(--text);font-family:Rajdhani,system-ui,sans-serif;font-size:18px;line-height:1.5;background-image:radial-gradient(circle at 15% 0,#3a0f2e55,transparent 40%),radial-gradient(circle at 90% 20%,#0d2f4a44,transparent 40%)}
+h1,h2,h3,.logo,nav a,nav button,.btn{font-family:Orbitron,sans-serif;letter-spacing:.06em}
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:10;background:#0a0710ee;backdrop-filter:blur(8px);border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:.7rem 1.2rem;flex-wrap:wrap;gap:.5rem}
+.logo{font-weight:900;font-size:1.3rem;color:var(--pink);text-shadow:0 0 14px #ff2d7a88;cursor:pointer}
+nav{display:flex;gap:.2rem;flex-wrap:wrap}
+nav>a,nav>.dd>button{background:none;border:0;color:var(--text);font-size:.78rem;padding:.55rem .8rem;cursor:pointer;text-decoration:none;text-transform:uppercase;border-radius:4px}
+nav a:hover,nav button:hover,nav .active{color:var(--pink)}
+.dd{position:relative}
+.dd .menu{display:none;position:absolute;top:100%;left:0;min-width:180px;background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:.3rem;z-index:20}
+.dd:hover .menu,.dd:focus-within .menu{display:block}
+.menu a{display:block;padding:.5rem .8rem;font-size:.75rem;color:var(--text);text-decoration:none;text-transform:uppercase;border-radius:4px}
+.menu a:hover{background:#ff2d7a22;color:var(--pink)}
+main{max-width:1100px;margin:0 auto;padding:2rem 1.2rem 4rem;overflow-x:hidden}
+.page{display:none}.page.show{display:block}
+h1{font-size:clamp(2.2rem,7vw,4.5rem);font-weight:900;line-height:1.05}
+h2{font-size:1.6rem;color:var(--pink);margin-bottom:1rem}
+h3{font-size:1rem;margin-bottom:.4rem}
+p{color:var(--mute);margin-bottom:1rem;max-width:65ch}
+.hero{text-align:center;padding:2rem 0}
+.hero h1 span{color:var(--pink);text-shadow:0 0 22px #ff2d7a99}
+.split{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:2rem}
+.side{border:1px solid var(--line);background:var(--panel);border-radius:10px;padding:2rem 1.4rem;text-align:left;cursor:pointer;transition:.2s;color:inherit;font:inherit}
+.side:hover{transform:translateY(-3px)}
+.side.m:hover{border-color:var(--pink);box-shadow:0 0 24px #ff2d7a44}
+.side.g:hover{border-color:var(--cyan);box-shadow:0 0 24px #27e1ff33}
+.side h3{font-size:1.5rem}.side.m h3{color:var(--pink)}.side.g h3{color:var(--cyan)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:1rem}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:1.2rem}
+.card .tag{font-size:.7rem;font-family:Orbitron;color:var(--cyan);text-transform:uppercase;letter-spacing:.1em}
+.ph{aspect-ratio:16/9;border:1px dashed var(--line);border-radius:8px;display:grid;place-items:center;color:var(--mute);font-size:.85rem;margin-bottom:.8rem;text-align:center;padding:.5rem}
+.btn{display:inline-block;background:var(--pink);color:#fff;text-decoration:none;padding:.65rem 1.2rem;border-radius:4px;font-size:.78rem;text-transform:uppercase;border:0;cursor:pointer}
+.btn.alt{background:none;border:1px solid var(--cyan);color:var(--cyan)}
+.row{display:flex;gap:.7rem;flex-wrap:wrap;margin-top:1rem}
+table{width:100%;border-collapse:collapse}
+td{padding:.6rem .4rem;border-bottom:1px solid var(--line)}td:first-child{color:var(--pink);font-family:Orbitron;font-size:.8rem;width:38%}
+.wrap{overflow-x:auto}
+.crumb{font-family:Orbitron;font-size:.7rem;color:var(--mute);margin-bottom:1rem;text-transform:uppercase}
+footer{text-align:center;color:var(--mute);font-size:.85rem;padding:2rem 1rem;border-top:1px solid var(--line)}
+@media(max-width:700px){.split{grid-template-columns:1fr}.dd .menu{position:static}}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo" onclick="go('home')">DJ NYLA</div>
+  <nav>
+    <a href="#home" data-p="home">Home</a>
+    <div class="dd"><button>Content</button><div class="menu">
+      <a href="#musik">Musik</a><a href="#gaming">Gaming</a><a href="#clips">Clips</a></div></div>
+    <div class="dd"><button>VRChat</button><div class="menu">
+      <a href="#gruppen">Gruppen</a><a href="#welten">Welten</a></div></div>
+    <a href="#socials">Socials</a>
+    <a href="#merch">Merch</a>
+    <a href="#setup">Setup</a>
+    <a href="#about">Über Nyla</a>
+  </nav>
+</header>
+<main>
+
+<section class="page" id="home">
+  <div class="hero">
+    <p class="crumb">Willkommen</p>
+    <h1>Zwei Seiten.<br><span>Eine Nyla.</span></h1>
+    <p style="margin:1rem auto">Gaming, Musik und VRChat an einem Ort. Such dir aus, worauf du heute Lust hast.</p>
+  </div>
+  <div class="split">
+    <button class="side m" onclick="go('musik')"><h3>Musik</h3><p>DJ-Sets, Streams und Mixcloud. Tuesday Tunes, Naughty Mischiefnight und Morning Grove Sunday.</p><span class="btn">Zur Musik</span></button>
+    <button class="side g" onclick="go('gaming')"><h3>Gaming</h3><p>Let's Plays, Highlights und Clips vom Kanal einfach_nyla.</p><span class="btn alt">Zum Gaming</span></button>
+  </div>
+  <h2 style="margin-top:3rem">Live-Status</h2>
+  <div class="grid">
+    <div class="card"><span class="tag">Twitch dj_nyla</span><h3>Musik-Kanal</h3><p>Status-Anzeige folgt, sobald die Twitch-Anbindung eingebaut ist.</p><a class="btn" href="https://twitch.tv/dj_nyla" target="_blank" rel="noopener">Kanal öffnen</a></div>
+    <div class="card"><span class="tag">Twitch einfach_nyla</span><h3>Gaming-Kanal</h3><p>Status-Anzeige folgt, sobald die Twitch-Anbindung eingebaut ist.</p><a class="btn alt" href="https://twitch.tv/einfach_nyla" target="_blank" rel="noopener">Kanal öffnen</a></div>
+  </div>
+</section>
+
+<section class="page" id="musik">
+  <p class="crumb">Content / Musik</p>
+  <h2>Musik</h2>
+  <p>Hier findest du meine Sets und die regelmäßigen Music-Streams.</p>
+  <div class="grid">
+    <div class="card"><span class="tag">Regelmäßig</span><h3>Tuesday Tunes</h3><p>Dein Wochenstart mit Musik.</p></div>
+    <div class="card"><span class="tag">Regelmäßig</span><h3>Naughty Mischiefnight</h3><p>Die etwas frechere Nacht.</p></div>
+    <div class="card"><span class="tag">Regelmäßig</span><h3>Morning Grove Sunday</h3><p>Entspannter Sonntagmorgen.</p></div>
+  </div>
+  <h2 style="margin-top:2rem">Sets auf Mixcloud</h2>
+  <div class="ph">Mixcloud-Player hier einbetten (Profil: FluffyPaw)</div>
+  <a class="btn" href="https://www.mixcloud.com/FluffyPaw/" target="_blank" rel="noopener">Alle Sets auf Mixcloud</a>
+</section>
+
+<section class="page" id="gaming">
+  <p class="crumb">Content / Gaming</p>
+  <h2>Gaming</h2>
+  <p>Was ich spiele, wann ich streame und wo du die besten Momente findest.</p>
+  <div class="grid">
+    <div class="card"><span class="tag">Aktuell</span><h3>Schedule I</h3><p>Hier kommen deine aktuellen Spiele rein.</p></div>
+    <div class="card"><span class="tag">Aktuell</span><h3>Euro Truck Simulator 2</h3><p>Mit Hayes Logistik unterwegs.</p></div>
+  </div>
+  <div class="row"><a class="btn alt" href="#clips">Zu den Clips</a><a class="btn" href="https://twitch.tv/einfach_nyla" target="_blank" rel="noopener">einfach_nyla auf Twitch</a></div>
+</section>
+
+<section class="page" id="clips">
+  <p class="crumb">Content / Gaming / Clips</p>
+  <h2>Clips</h2>
+  <p>Die besten Momente aus dem Stream.</p>
+  <div class="grid">
+    <div class="card"><div class="ph">Clip 1</div><h3>Clip-Titel</h3></div>
+    <div class="card"><div class="ph">Clip 2</div><h3>Clip-Titel</h3></div>
+    <div class="card"><div class="ph">Clip 3</div><h3>Clip-Titel</h3></div>
+  </div>
+</section>
+
+<section class="page" id="gruppen">
+  <p class="crumb">VRChat / Gruppen</p>
+  <h2>VRChat-Gruppen</h2>
+  <p>Hier kannst du meinen Gruppen beitreten.</p>
+  <div class="grid">
+    <div class="card"><span class="tag">Gruppe</span><h3>MISCH.8432</h3><p>Tritt der Gruppe in VRChat bei.</p><a class="btn" href="https://vrc.group/MISCH.8432" target="_blank" rel="noopener">Beitreten</a></div>
+  </div>
+</section>
+
+<section class="page" id="welten">
+  <p class="crumb">VRChat / Welten</p>
+  <h2>VRChat-Welten</h2>
+  <p>Meine eigenen Welten zum Besuchen.</p>
+  <div class="grid">
+    <div class="card"><div class="ph">Vorschaubild</div><h3>Dream Café</h3><p>Gemütliche Welt, aktuell in Arbeit.</p><a class="btn" href="#welten">In VRChat öffnen</a></div>
+  </div>
+</section>
+
+<section class="page" id="socials">
+  <p class="crumb">Socials</p>
+  <h2>Socials</h2>
+  <div class="grid">
+    <div class="card"><h3>Twitch Musik</h3><p>dj_nyla</p><a class="btn" href="https://twitch.tv/dj_nyla" target="_blank" rel="noopener">Folgen</a></div>
+    <div class="card"><h3>Twitch Gaming</h3><p>einfach_nyla</p><a class="btn" href="https://twitch.tv/einfach_nyla" target="_blank" rel="noopener">Folgen</a></div>
+    <div class="card"><h3>Mixcloud</h3><p>FluffyPaw</p><a class="btn" href="https://www.mixcloud.com/FluffyPaw/" target="_blank" rel="noopener">Anhören</a></div>
+    <div class="card"><h3>YouTube Musik</h3><p>Sets und Musik-Streams</p><a class="btn" href="https://www.youtube.com/channel/UCssIETIZeDEV4sPSXbAuUnQ" target="_blank" rel="noopener">Ansehen</a></div>
+    <div class="card"><h3>YouTube Gaming</h3><p>Gaming-Videos und Highlights</p><a class="btn alt" href="https://www.youtube.com/channel/UCLgxtNxTCaDegJPW9U_cwjQ" target="_blank" rel="noopener">Ansehen</a></div>
+    <div class="card"><h3>Bluesky</h3><p>xmetyx.bsky.social</p><a class="btn" href="https://bsky.app/profile/xmetyx.bsky.social" target="_blank" rel="noopener">Folgen</a></div>
+    <div class="card"><h3>TikTok</h3><p>@einfach_mety</p><a class="btn" href="https://www.tiktok.com/@einfach_mety" target="_blank" rel="noopener">Folgen</a></div>
+    <div class="card"><h3>Discord</h3><p>Komm in die Community</p><a class="btn" href="https://discord.gg/bCM5s7dnZ2" target="_blank" rel="noopener">Beitreten</a></div>
+  </div>
+</section>
+
+<section class="page" id="merch">
+  <p class="crumb">Merch</p>
+  <h2>Merch</h2>
+  <p>Shirts und mehr, um mich zu unterstützen.</p>
+  <div class="grid">
+    <div class="card"><span class="tag">Shop</span><h3>Merch</h3><p>Der offizielle Shop bei getshirts.</p><a class="btn" href="https://www.getshirts.de/index.php?page=shop&id=einfach_mety" target="_blank" rel="noopener">Zum Shop</a></div>
+    <div class="card"><span class="tag">Wunschliste</span><h3>MetY</h3><p>Amazon-Wunschliste.</p><a class="btn alt" href="https://www.amazon.de/hz/wishlist/ls/V5QP385OWQRG?ref_=wl_share" target="_blank" rel="noopener">Ansehen</a></div>
+    <div class="card"><span class="tag">Wunschliste</span><h3>Ma'irra</h3><p>Amazon-Wunschliste.</p><a class="btn alt" href="https://www.amazon.de/hz/wishlist/ls/TJV131MEK6CW?ref_=wl_share" target="_blank" rel="noopener">Ansehen</a></div>
+  </div>
+</section>
+
+<section class="page" id="setup">
+  <p class="crumb">Setup</p>
+  <h2>Mein Setup</h2>
+  <p>Hardware und Equipment, mit dem ich streame und auflege.</p>
+  <div class="card wrap"><table>
+    <tr><td>PC</td><td>Hier eintragen</td></tr>
+    <tr><td>Grafikkarte</td><td>Hier eintragen</td></tr>
+    <tr><td>Mikrofon</td><td>Hier eintragen</td></tr>
+    <tr><td>DJ-Equipment</td><td>Hier eintragen</td></tr>
+    <tr><td>Kamera</td><td>Hier eintragen</td></tr>
+    <tr><td>VR-Headset</td><td>Hier eintragen</td></tr>
+  </table></div>
+</section>
+
+<section class="page" id="about">
+  <p class="crumb">Über Nyla</p>
+  <h2>Über Nyla</h2>
+  <p>Ich bin Nyla, aber viele kennen mich als DJ Nyla. Ich lege auf, spiele und treibe mich in VRChat herum. Hier kannst du dir deinen eigenen Text eintragen.</p>
+  <p>Außerdem bin ich Teil von Brutal Electric und betreibe mit Kura Hayes die Hayes Logistik.</p>
+</section>
+
+</main>
+<footer>DJ Nyla</footer>
+<script>
+const pages=[...document.querySelectorAll('.page')].map(p=>p.id);
+function go(id){location.hash=id}
+function render(){
+  let id=location.hash.slice(1);
+  if(!pages.includes(id)) id='home';
+  document.querySelectorAll('.page').forEach(p=>p.classList.toggle('show',p.id===id));
+  document.querySelectorAll('nav a').forEach(a=>a.classList.toggle('active',a.getAttribute('href')==='#'+id));
+  window.scrollTo(0,0);
+}
+window.addEventListener('hashchange',render);
+render();
+</script>
+</body>
+</html>
