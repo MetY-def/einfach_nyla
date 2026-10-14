@@ -38,7 +38,13 @@ p{color:var(--mute);margin-bottom:1rem;max-width:65ch}
 .side h3{font-size:1.5rem}.side.m h3{color:var(--pink)}.side.g h3{color:var(--cyan)}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:1rem}
 .card{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:1.2rem}
+.card .banner{display:block;width:100%;height:auto;border-radius:8px;margin-bottom:.9rem}
+.ab{display:grid;grid-template-columns:280px 1fr;gap:2rem;align-items:center;margin-bottom:2rem}
+.ab.rev{grid-template-columns:1fr 280px}.ab.rev .portrait{order:2}
+.portrait{width:100%;height:auto;border-radius:10px;border:1px solid var(--line);box-shadow:0 0 24px #ff2d7a33}
+@media(max-width:700px){.ab,.ab.rev{grid-template-columns:1fr}.ab.rev .portrait{order:0}.portrait{max-width:300px;margin:0 auto}}
 .card .tag{font-size:.7rem;font-family:Orbitron;color:var(--cyan);text-transform:uppercase;letter-spacing:.1em}
+.card .when{color:var(--text);font-weight:600;margin:0 0 .6rem;font-size:1rem}.card .when span{color:var(--pink);font-family:Orbitron;font-size:.8rem;display:block;letter-spacing:.06em;text-transform:uppercase;margin-bottom:.1rem}
 .ph{aspect-ratio:16/9;border:1px dashed var(--line);border-radius:8px;display:grid;place-items:center;color:var(--mute);font-size:.85rem;margin-bottom:.8rem;text-align:center;padding:.5rem}
 .btn{display:inline-block;background:var(--pink);color:#fff;text-decoration:none;padding:.65rem 1.2rem;border-radius:4px;font-size:.78rem;text-transform:uppercase;border:0;cursor:pointer}
 .btn.alt{background:none;border:1px solid var(--cyan);color:var(--cyan)}
@@ -90,9 +96,10 @@ footer{text-align:center;color:var(--mute);font-size:.85rem;padding:2rem 1rem;bo
   <h2>Musik</h2>
   <p>Hier findest du meine Sets und die regelmäßigen Music-Streams.</p>
   <div class="grid">
-    <div class="card"><span class="tag">Regelmäßig</span><h3>Tuesday Tunes</h3><p>Dein Wochenstart mit Musik.</p></div>
-    <div class="card"><span class="tag">Regelmäßig</span><h3>Naughty Mischiefnight</h3><p>Die etwas frechere Nacht.</p></div>
-    <div class="card"><span class="tag">Regelmäßig</span><h3>Morning Grove Sunday</h3><p>Entspannter Sonntagmorgen.</p></div>
+    <div class="card"><span class="tag">Regelmäßig</span><h3>Tuesday Tunes</h3><p class="when"><span>Dienstag</span>20:00 - 21:00</p><p>Dein Wochenstart mit Musik.</p></div>
+    <div class="card"><span class="tag">Regelmäßig</span><h3>Naughty Mischiefnight</h3><p class="when"><span>Freitag</span>20:00 - 21:00</p><p>Die etwas frechere Nacht.</p></div>
+    <div class="card"><span class="tag">Regelmäßig</span><h3>Morning Grove Sunday</h3><p class="when"><span>Sonntag</span>11:00 - 12:00</p><p>Entspannter Sonntagmorgen.</p></div>
+    <div class="card"><span class="tag">Unregelmäßig</span><h3>Spontanität</h3><p class="when"><span>Spontan</span>00:00 - 00:00</p><p>Wenn mir danach ist, geht es einfach los.</p></div>
   </div>
   <h2 style="margin-top:2rem">Sets auf Mixcloud</h2>
   <div class="ph">Mixcloud-Player hier einbetten (Profil: FluffyPaw)</div>
@@ -126,7 +133,7 @@ footer{text-align:center;color:var(--mute);font-size:.85rem;padding:2rem 1rem;bo
   <h2>VRChat-Gruppen</h2>
   <p>Hier kannst du meinen Gruppen beitreten.</p>
   <div class="grid">
-    <div class="card"><span class="tag">Gruppe</span><h3>MISCH.8432</h3><p>Tritt der Gruppe in VRChat bei.</p><a class="btn" href="https://vrc.group/MISCH.8432" target="_blank" rel="noopener">Beitreten</a></div>
+    <div class="card"><img class="banner" src="images/banner.webp" alt="DJ Nyla Banner" loading="lazy"><span class="tag">Gruppe</span><h3>MISCH.8432</h3><p>Tritt der Gruppe in VRChat bei.</p><a class="btn" href="https://vrc.group/MISCH.8432" target="_blank" rel="noopener">Beitreten</a></div>
   </div>
 </section>
 
@@ -135,7 +142,9 @@ footer{text-align:center;color:var(--mute);font-size:.85rem;padding:2rem 1rem;bo
   <h2>VRChat-Welten</h2>
   <p>Meine eigenen Welten zum Besuchen.</p>
   <div class="grid">
-    <div class="card"><div class="ph">Vorschaubild</div><h3>Dream Café</h3><p>Gemütliche Welt, aktuell in Arbeit.</p><a class="btn" href="#welten">In VRChat öffnen</a></div>
+    <div class="card"><img class="banner" src="images/welt-studio-thirteen.webp" alt="Studio Thirteen" loading="lazy"><span class="tag">Welt</span><h3>Studio Thirteen</h3><a class="btn" href="https://vrchat.com/home/launch?worldId=wrld_69ddd86d-12e6-4c01-902c-7a66e72d0ed0" target="_blank" rel="noopener">In VRChat öffnen</a></div>
+    <div class="card"><img class="banner" src="images/welt-astera.webp" alt="Astera" loading="lazy"><span class="tag">Welt</span><h3>Astera</h3><a class="btn" href="https://vrchat.com/home/launch?worldId=wrld_ad236d17-a734-4570-9661-bc1174b0c2d3" target="_blank" rel="noopener">In VRChat öffnen</a></div>
+    <div class="card"><img class="banner" src="images/welt-dream-cafe.webp" alt="Dream Café" loading="lazy"><span class="tag">Welt</span><h3>Dream Café</h3><a class="btn" href="https://vrchat.com/home/launch?worldId=wrld_c704a9e4-0124-4e0a-b553-94cb05fda37b" target="_blank" rel="noopener">In VRChat öffnen</a></div>
   </div>
 </section>
 
@@ -182,8 +191,25 @@ footer{text-align:center;color:var(--mute);font-size:.85rem;padding:2rem 1rem;bo
 <section class="page" id="about">
   <p class="crumb">Über Nyla</p>
   <h2>Über Nyla</h2>
-  <p>Ich bin Nyla, aber viele kennen mich als DJ Nyla. Ich lege auf, spiele und treibe mich in VRChat herum. Hier kannst du dir deinen eigenen Text eintragen.</p>
-  <p>Außerdem bin ich Teil von Brutal Electric und betreibe mit Kura Hayes die Hayes Logistik.</p>
+  <div class="ab">
+    <img class="portrait" src="images/nyla-1.webp" alt="Nyla" loading="lazy">
+    <div>
+      <h3>Hey, ich bin Nyla!</h3>
+      <p>Willkommen in meiner kleinen Welt!</p>
+      <p>leidenschaftliche Streamerin, Gaming- und Musikliebhaberin, Katzenfan und ein kleiner Furry-Nerd.</p>
+      <p>Mit dem Streamen habe ich 2016 angefangen und seitdem ist es für mich viel mehr als nur ein Hobby. Ich liebe es, gemeinsam mit anderen zu zocken, Musik zu genießen, zu lachen und eine Community aufzubauen, in der sich jeder willkommen und wohlfühlen kann.</p>
+    </div>
+  </div>
+  <div class="ab rev">
+    <img class="portrait" src="images/nyla-2.webp" alt="Nyla als Furry-Avatar" loading="lazy">
+    <div>
+      <p>Ich bin eine stolze Transfrau und glaube daran, dass jeder Mensch seinen eigenen Weg gehen kann und sich selbst treu bleiben sollte. Sei einfach du selbst – denn genau so bist du richtig.</p>
+      <p>Abseits vom Gaming schlägt mein Herz für Körperschmuck, Tattoos und natürlich Katzen. Ich liebe alternative Styles, kreative Welten und alles, was Persönlichkeit zeigt. Und wenn irgendwo ein bisschen Furry-Stuff dabei ist, bin ich natürlich auch nicht weit entfernt. :3</p>
+    </div>
+  </div>
+  <p>Ob Gaming, Musik, gemütliche Streams oder einfach eine gute Zeit miteinander – ich freue mich über jeden, der Teil meiner kleinen Welt werden möchte.</p>
+  <p>Schön, dass du hier bist!</p>
+  <p>Kiss, Nyla 💋</p>
 </section>
 
 </main>
