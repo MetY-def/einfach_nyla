@@ -43,6 +43,7 @@ p{color:var(--mute);margin-bottom:1rem;max-width:65ch}
 .ab.rev{grid-template-columns:1fr 280px}.ab.rev .portrait{order:2}
 .portrait{width:100%;height:auto;border-radius:10px;border:1px solid var(--line);box-shadow:0 0 24px #ff2d7a33}
 @media(max-width:700px){.ab,.ab.rev{grid-template-columns:1fr}.ab.rev .portrait{order:0}.portrait{max-width:300px;margin:0 auto}}
+.sec{scroll-margin-top:90px;margin-bottom:3rem}
 .card .tag{font-size:.7rem;font-family:Orbitron;color:var(--cyan);text-transform:uppercase;letter-spacing:.1em}
 .card .when{color:var(--text);font-weight:600;margin:0 0 .6rem;font-size:1rem}.card .when span{color:var(--pink);font-family:Orbitron;font-size:.8rem;display:block;letter-spacing:.06em;text-transform:uppercase;margin-bottom:.1rem}
 .ph{aspect-ratio:16/9;border:1px dashed var(--line);border-radius:8px;display:grid;place-items:center;color:var(--mute);font-size:.85rem;margin-bottom:.8rem;text-align:center;padding:.5rem}
@@ -64,7 +65,7 @@ footer{text-align:center;color:var(--mute);font-size:.85rem;padding:2rem 1rem;bo
     <a href="#home" data-p="home">Home</a>
     <div class="dd"><button>Content</button><div class="menu">
       <a href="#musik">Musik</a><a href="#gaming">Gaming</a><a href="#clips">Clips</a></div></div>
-    <div class="dd"><button>VRChat</button><div class="menu">
+    <div class="dd"><button onclick="go('vrchat')">VRChat</button><div class="menu">
       <a href="#gruppen">Gruppen</a><a href="#welten">Welten</a></div></div>
     <a href="#socials">Socials</a>
     <a href="#merch">Merch</a>
@@ -128,23 +129,23 @@ footer{text-align:center;color:var(--mute);font-size:.85rem;padding:2rem 1rem;bo
   </div>
 </section>
 
-<section class="page" id="gruppen">
-  <p class="crumb">VRChat / Gruppen</p>
+<section class="page" id="vrchat">
+  <p class="crumb">VRChat</p>
+  <div class="sec" id="gruppen">
   <h2>VRChat-Gruppen</h2>
   <p>Hier kannst du meinen Gruppen beitreten.</p>
   <div class="grid">
     <div class="card"><img class="banner" src="images/banner.webp" alt="DJ Nyla Banner" loading="lazy"><span class="tag">Gruppe</span><h3>MISCH.8432</h3><p>Tritt der Gruppe in VRChat bei.</p><a class="btn" href="https://vrc.group/MISCH.8432" target="_blank" rel="noopener">Beitreten</a></div>
   </div>
-</section>
-
-<section class="page" id="welten">
-  <p class="crumb">VRChat / Welten</p>
+  </div>
+  <div class="sec" id="welten">
   <h2>VRChat-Welten</h2>
   <p>Meine eigenen Welten zum Besuchen.</p>
   <div class="grid">
     <div class="card"><img class="banner" src="images/welt-studio-thirteen.webp" alt="Studio Thirteen" loading="lazy"><span class="tag">Welt</span><h3>Studio Thirteen</h3><a class="btn" href="https://vrchat.com/home/launch?worldId=wrld_69ddd86d-12e6-4c01-902c-7a66e72d0ed0" target="_blank" rel="noopener">In VRChat öffnen</a></div>
     <div class="card"><img class="banner" src="images/welt-astera.webp" alt="Astera" loading="lazy"><span class="tag">Welt</span><h3>Astera</h3><a class="btn" href="https://vrchat.com/home/launch?worldId=wrld_ad236d17-a734-4570-9661-bc1174b0c2d3" target="_blank" rel="noopener">In VRChat öffnen</a></div>
     <div class="card"><img class="banner" src="images/welt-dream-cafe.webp" alt="Dream Café" loading="lazy"><span class="tag">Welt</span><h3>Dream Café</h3><a class="btn" href="https://vrchat.com/home/launch?worldId=wrld_c704a9e4-0124-4e0a-b553-94cb05fda37b" target="_blank" rel="noopener">In VRChat öffnen</a></div>
+  </div>
   </div>
 </section>
 
@@ -217,12 +218,15 @@ footer{text-align:center;color:var(--mute);font-size:.85rem;padding:2rem 1rem;bo
 <script>
 const pages=[...document.querySelectorAll('.page')].map(p=>p.id);
 function go(id){location.hash=id}
+const alias={gruppen:'vrchat',welten:'vrchat'};
 function render(){
-  let id=location.hash.slice(1);
+  const h=location.hash.slice(1);
+  let id=alias[h]||h;
   if(!pages.includes(id)) id='home';
   document.querySelectorAll('.page').forEach(p=>p.classList.toggle('show',p.id===id));
   document.querySelectorAll('nav a').forEach(a=>a.classList.toggle('active',a.getAttribute('href')==='#'+id));
   window.scrollTo(0,0);
+  if(alias[h]){const t=document.getElementById(h);if(t)t.scrollIntoView({behavior:'smooth'})}
 }
 window.addEventListener('hashchange',render);
 render();
