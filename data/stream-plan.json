@@ -1,0 +1,41 @@
+{
+  "week": 42,
+  "month": "Oktober 2026",
+  "rows": [
+    {
+      "day": "MO",
+      "time": "16:00 – 21:00",
+      "name": "Schedule I"
+    },
+    {
+      "day": "DI",
+      "time": "20:00 – 21:00",
+      "name": "Tuesday Tunes"
+    },
+    {
+      "day": "MI",
+      "time": "16:00 – 21:00",
+      "name": "Schedule I"
+    },
+    {
+      "day": "DO",
+      "time": "16:00 – 21:00",
+      "name": "No Man's Sky"
+    },
+    {
+      "day": "FR",
+      "time": "20:00 – 21:00",
+      "name": "Naughty Mischiefnight"
+    },
+    {
+      "day": "SA",
+      "time": "",
+      "name": "Streamfrei"
+    },
+    {
+      "day": "SO",
+      "time": "11:00 – 12:00",
+      "name": "Morning Groove Sunday"
+    }
+  ]
+}

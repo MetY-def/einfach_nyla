@@ -79,6 +79,8 @@ main.wide{max-width:1500px}
 .clipc:hover{border-color:var(--pink);box-shadow:0 0 18px #e83fcf44}
 .home-two{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,440px);gap:2rem;align-items:start;margin-top:3rem}
 .home-two h2{margin-top:0}
+.plan-col{width:100%;min-width:0}
+@media(max-width:800px){.home-two{grid-template-columns:1fr}.plan-col{max-width:460px;width:100%;margin:0 auto}}
 .card .tag{font-size:.7rem;font-family:Orbitron;color:var(--cyan);text-transform:uppercase;letter-spacing:.1em}
 .card .when{color:var(--text);font-weight:600;margin:0 0 .6rem;font-size:1rem}.card .when span{color:var(--pink);font-family:Orbitron;font-size:.8rem;display:block;letter-spacing:.06em;text-transform:uppercase;margin-bottom:.1rem}
 .ph{aspect-ratio:16/9;border:1px dashed var(--line);border-radius:8px;display:grid;place-items:center;color:var(--mute);font-size:.85rem;margin-bottom:.8rem;text-align:center;padding:.5rem}
@@ -94,6 +96,19 @@ footer{text-align:center;color:var(--mute);font-size:.85rem;padding:2rem 1rem;bo
 html{overflow-y:scroll}
 body::before{content:"";position:fixed;top:0;left:0;width:100%;height:100vh;height:100lvh;z-index:-1;background:linear-gradient(rgba(15,4,24,.6),rgba(15,4,24,.84)),url(images/background.webp) center/cover no-repeat}
 .card,.side,.soc{backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+
+.stream-plan{width:100%;padding:1.1rem;background:linear-gradient(145deg,#0b0314,#1b0730 58%,#10031c);border:1px solid #8f2c92;border-radius:12px;box-shadow:0 0 28px #e83fcf33;overflow:hidden}
+.stream-plan-head{text-align:center;margin-bottom:1rem}
+.stream-plan-title{font-family:Orbitron,sans-serif;font-size:clamp(1.35rem,3vw,2.2rem);font-weight:900;letter-spacing:.06em;color:var(--pink);text-shadow:0 0 14px #e83fcf88;margin:.2rem 0 .9rem}
+.stream-plan-meta{display:flex;justify-content:center;gap:.6rem;flex-wrap:wrap}
+.stream-plan-meta span{font-family:Orbitron,sans-serif;font-size:.78rem;font-weight:700;letter-spacing:.04em;color:var(--text);padding:.45rem .75rem;border:1px solid #db63c3;border-radius:8px;background:#13051f}
+.stream-plan-row{display:grid;grid-template-columns:76px minmax(0,1fr);gap:.55rem;margin:.55rem 0;align-items:stretch}
+.stream-plan-day{display:flex;align-items:center;justify-content:center;background:linear-gradient(145deg,#70245f,#2c0b3d);border:1px solid #ff77d0;border-radius:10px;color:var(--text);font-family:Orbitron,sans-serif;font-weight:700;font-size:1.2rem;letter-spacing:.04em;text-shadow:0 0 10px #e83fcf88}
+.stream-plan-event{min-width:0;display:flex;flex-direction:column;justify-content:center;gap:.1rem;padding:.55rem .8rem;background:#160721;border:1px solid #d64aa9;border-radius:10px}
+.stream-plan-time{font-family:Rajdhani,sans-serif;font-size:.95rem;font-weight:600;color:var(--pink);line-height:1.2}
+.stream-plan-name{font-family:Rajdhani,sans-serif;font-size:1.2rem;font-weight:600;color:var(--text);line-height:1.25;overflow-wrap:anywhere}
+.stream-plan-loading{font-family:Rajdhani,sans-serif;color:var(--mute);text-align:center}
+@media(max-width:480px){.stream-plan{padding:.65rem}.stream-plan-row{grid-template-columns:58px minmax(0,1fr);gap:.35rem}.stream-plan-day{font-size:1rem}.stream-plan-event{padding:.45rem .55rem}.stream-plan-name{font-size:1.05rem}}
 </style>
 </head>
 <body>
@@ -126,11 +141,16 @@ body::before{content:"";position:fixed;top:0;left:0;width:100%;height:100vh;heig
     <button class="side m" onclick="go('musik')"><h3>Musik</h3><p>DJ-Sets und Streams. Tuesday Tunes, Naughty Mischiefnight und Morning Grove Sunday.</p><span class="btn">Zur Musik</span></button>
     <button class="side g" onclick="go('gaming')"><h3>Gaming</h3><p>Let's Plays, Highlights und Clips vom Kanal einfach_nyla.</p><span class="btn">Zum Gaming</span></button>
   </div>
-  <div class="about-mini">
+  <div class="home-two">
+    <div class="about-mini">
       <h2>Über Nyla</h2>
       <div class="card"><h3 style="margin-bottom:1rem">Hey, ich bin Nyla!</h3><a class="btn" href="#about">Mehr über Nyla</a></div>
     </div>
-
+    <div class="plan-col">
+      <div id="streamPlan" class="stream-plan" aria-label="Streamplan für die aktuelle Kalenderwoche">
+        <p class="stream-plan-loading">Streamplan wird geladen …</p>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -286,6 +306,34 @@ function render(){
 }
 window.addEventListener('hashchange',render);
 render();
+
+async function loadStreamPlan(){
+  const root=document.getElementById('streamPlan');
+  if(!root) return;
+  try{
+    const response=await fetch('data/stream-plan.json',{cache:'no-store'});
+    if(!response.ok) throw new Error('Streamplan noch nicht erstellt');
+    const plan=await response.json();
+    const head=document.createElement('div');head.className='stream-plan-head';
+    const title=document.createElement('div');title.className='stream-plan-title';title.textContent='Stream Plan';head.appendChild(title);
+    const meta=document.createElement('div');meta.className='stream-plan-meta';
+    const week=document.createElement('span');week.textContent='KW '+plan.week;meta.appendChild(week);
+    const month=document.createElement('span');month.textContent=plan.month;meta.appendChild(month);
+    head.appendChild(meta);root.replaceChildren(head);
+    for(const item of plan.rows){
+      const row=document.createElement('div');row.className='stream-plan-row';
+      const day=document.createElement('div');day.className='stream-plan-day';day.textContent=item.day;
+      const event=document.createElement('div');event.className='stream-plan-event';
+      if(item.time){const time=document.createElement('div');time.className='stream-plan-time';time.textContent=item.time;event.appendChild(time);}
+      const name=document.createElement('div');name.className='stream-plan-name';name.textContent=item.name;
+      event.appendChild(name);row.append(day,event);root.appendChild(row);
+    }
+  }catch(error){
+    root.innerHTML='<p class="stream-plan-loading">Der Streamplan wird nach dem ersten GitHub-Actions-Lauf angezeigt.</p>';
+  }
+}
+loadStreamPlan();
+
 </script>
 </body>
 </html>
