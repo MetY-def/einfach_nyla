@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>DJ Nyla</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Rajdhani:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0f0418;--panel:rgba(22,7,38,.8);--line:#4b2275;--text:#f7ecff;--mute:#c0a8dc;--pink:#e83fcf;--cyan:#b983ff;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:light){:root:not([data-theme="dark"]){--bg:#0f0418}}
+*{box-sizing:border-box;margin:0}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{background:var(--bg);color:var(--text);font-family:Rajdhani,system-ui,sans-serif;font-size:18px;line-height:1.5}
+h1,h2,h3,.logo,nav a,nav button,.btn{font-family:Orbitron,sans-serif;letter-spacing:.06em}
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:10;background:rgba(15,4,24,.86);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:.7rem 1.2rem;flex-wrap:wrap;gap:.5rem}
+.logo{font-weight:900;font-size:1.3rem;color:var(--pink);text-shadow:0 0 14px #e83fcf88;cursor:pointer}
+nav{display:flex;gap:.2rem;flex-wrap:wrap}
+nav>a,nav>.dd>button{background:none;border:0;color:var(--text);font-size:.78rem;padding:.55rem .8rem;cursor:pointer;text-decoration:none;text-transform:uppercase;border-radius:4px}
+nav a:hover,nav button:hover,nav .active{color:var(--pink)}
+.dd{position:relative}
+.dd .menu{display:none;position:absolute;top:100%;left:0;min-width:180px;background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:.3rem;z-index:20}
+.dd:hover .menu,.dd:focus-within .menu{display:block}
+.menu a{display:block;padding:.5rem .8rem;font-size:.75rem;color:var(--text);text-decoration:none;text-transform:uppercase;border-radius:4px}
+.menu a:hover{background:#e83fcf22;color:var(--pink)}
+main{max-width:1100px;margin:0 auto;padding:2rem 1.2rem 4rem;overflow-x:hidden}
+.page{display:none}.page.show{display:block}
+h1{font-size:clamp(2.2rem,7vw,4.5rem);font-weight:900;line-height:1.05}
+h2{font-size:1.6rem;color:var(--pink);margin-bottom:1rem}
+h3{font-size:1rem;margin-bottom:.4rem}
+p{color:var(--mute);margin-bottom:1rem;max-width:65ch}
+.hero{text-align:center;padding:2rem 0}
+.hero h1 span{color:var(--pink);text-shadow:0 0 22px #e83fcf99}
+.split{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:2rem}
+.side{border:1px solid var(--line);background:var(--panel);border-radius:10px;padding:2rem 1.4rem;text-align:left;cursor:pointer;transition:.2s;color:inherit;font:inherit}
+.side:hover{transform:translateY(-3px)}
+.side.m:hover{border-color:var(--pink);box-shadow:0 0 24px #e83fcf44}
+.side.g:hover{border-color:var(--pink);box-shadow:0 0 24px #e83fcf44}
+.side h3{font-size:1.5rem}.side.m h3{color:var(--pink)}.side.g h3{color:var(--pink)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:1rem}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:1.2rem}
+.card .banner{display:block;width:100%;height:auto;border-radius:8px;margin-bottom:.9rem}
+.ab{display:grid;grid-template-columns:280px 1fr;gap:2rem;align-items:center;margin-bottom:2rem}
+.ab.rev{grid-template-columns:1fr 280px}.ab.rev .portrait{order:2}
+.portrait{width:100%;height:auto;border-radius:10px;border:1px solid var(--line);box-shadow:0 0 24px #e83fcf33}
+@media(max-width:700px){.ab,.ab.rev{grid-template-columns:1fr}.ab.rev .portrait{order:0}.portrait{max-width:300px;margin:0 auto}}
+.sec{scroll-margin-top:90px;margin-bottom:3rem}
+.soc-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1rem}
+.soc{display:flex;flex-direction:column;align-items:center;gap:.5rem;text-decoration:none;text-align:center;padding:1.3rem .8rem 1.2rem;border:1px solid #e83fcf55;border-radius:12px;background:linear-gradient(160deg,rgba(34,10,56,.72),rgba(20,6,34,.8));transition:.2s}
+.soc:hover{border-color:var(--pink);box-shadow:0 0 22px #e83fcf44;transform:translateY(-3px)}
+.soc .ic{width:50px;height:50px;border-radius:50%;background:#fff;display:grid;place-items:center;box-shadow:0 0 14px #e83fcf55}
+.soc .ic svg{width:25px;height:25px;fill:currentColor}
+.soc .nm{font-family:Orbitron,sans-serif;font-size:.78rem;letter-spacing:.06em;text-transform:uppercase;color:#f5a8ec;font-weight:700;margin-top:.3rem}
+.soc .sb{color:var(--mute);font-size:.9rem}
+.bh{display:flex;align-items:stretch;min-height:440px;border:1px solid var(--line);border-radius:14px;overflow:hidden;background:linear-gradient(120deg,rgba(30,8,50,.72),rgba(14,4,24,.8))}
+.bh .bhimg{display:block;width:44%;max-width:440px;object-fit:cover;object-position:left top;-webkit-mask-image:linear-gradient(to right,#000 62%,transparent);mask-image:linear-gradient(to right,#000 62%,transparent)}
+.bh .bht{flex:1;display:flex;flex-direction:column;justify-content:center;padding:2rem 2rem 2rem .5rem}
+.bh h1{font-size:clamp(2rem,4.6vw,3.6rem)}.bh h1 span{color:var(--pink);text-shadow:0 0 22px #e83fcf99}
+@media(max-width:700px){.bh{flex-direction:column;min-height:0}.bh .bhimg{width:100%;max-width:none;height:300px;object-position:center top;-webkit-mask-image:linear-gradient(to bottom,#000 62%,transparent);mask-image:linear-gradient(to bottom,#000 62%,transparent)}.bh .bht{padding:0 1.2rem 1.6rem;text-align:center}}
+.soc-row.sup{grid-template-columns:repeat(auto-fill,minmax(150px,1fr))}
+main.wide{max-width:1500px}
+.setup{grid-template-columns:repeat(5,minmax(0,1fr));align-items:stretch}
+.setup tr{display:block;padding:.45rem 0;border-bottom:1px solid var(--line)}
+.setup td{display:block;width:auto;border:0;padding:.05rem 0;font-size:.95rem;line-height:1.35}
+.setup td:first-child{width:auto;font-size:.68rem;margin-bottom:.1rem}
+@media(max-width:1150px){.setup{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:760px){.setup{grid-template-columns:1fr}}
+.setup h3{color:var(--pink);font-size:1.1rem;margin-bottom:.6rem}
+.clip{position:relative;aspect-ratio:16/9;background:#000;border-radius:8px;overflow:hidden;margin-bottom:.8rem;cursor:pointer}
+.clip img,.clip iframe{width:100%;height:100%;border:0;object-fit:cover;display:block}
+.clip .play{position:absolute;inset:0;margin:auto;width:54px;height:54px;border-radius:50%;background:#e83fcfcc;border:0;cursor:pointer;box-shadow:0 0 18px #e83fcf}
+.clip .play::after{content:"";position:absolute;left:21px;top:16px;border-left:18px solid #fff;border-top:11px solid transparent;border-bottom:11px solid transparent}
+.clipc{padding:0;overflow:hidden;text-decoration:none;color:inherit;display:block;cursor:pointer}
+.clipc .th{position:relative;aspect-ratio:16/9;background:#000}
+.clipc img{width:100%;height:100%;object-fit:cover;display:block;opacity:.85}
+.clipc .dur{position:absolute;bottom:6px;right:8px;font-family:Orbitron,sans-serif;font-size:.55rem;letter-spacing:.1em;color:#fff;background:rgba(0,0,0,.6);padding:2px 7px;border-radius:8px}
+.clipc .bd{padding:12px 14px}
+.clipc h3{font-family:Rajdhani,sans-serif;font-size:1rem;font-weight:600;letter-spacing:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:.3rem}
+.clipc .meta{font-family:Orbitron,sans-serif;font-size:.55rem;letter-spacing:.12em;color:var(--mute)}
+.clipc:hover{border-color:var(--pink);box-shadow:0 0 18px #e83fcf44}
+.home-two{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,440px);gap:2rem;align-items:start;margin-top:3rem}
+.home-two h2{margin-top:0}
+.calframe{border:1px solid var(--line);border-radius:14px;overflow:hidden;background:#fff;box-shadow:0 0 28px #e83fcf33}
+.calframe iframe{display:block;width:100%;height:600px;border:0}
+.plan-col h2{margin-top:0}
+.plannote a{color:var(--pink)}
+.plannote{font-size:.85rem;color:var(--mute);margin:.6rem 0 0}
+@media(max-width:800px){.home-two{grid-template-columns:1fr}.plan-col{max-width:460px;width:100%;margin:0 auto}}
+.card .tag{font-size:.7rem;font-family:Orbitron;color:var(--cyan);text-transform:uppercase;letter-spacing:.1em}
+.card .when{color:var(--text);font-weight:600;margin:0 0 .6rem;font-size:1rem}.card .when span{color:var(--pink);font-family:Orbitron;font-size:.8rem;display:block;letter-spacing:.06em;text-transform:uppercase;margin-bottom:.1rem}
+.ph{aspect-ratio:16/9;border:1px dashed var(--line);border-radius:8px;display:grid;place-items:center;color:var(--mute);font-size:.85rem;margin-bottom:.8rem;text-align:center;padding:.5rem}
+.btn{display:inline-block;background:var(--pink);color:#fff;text-decoration:none;padding:.65rem 1.2rem;border-radius:4px;font-size:.78rem;text-transform:uppercase;border:0;cursor:pointer}
+.btn.alt{background:none;border:1px solid var(--cyan);color:var(--cyan)}
+.row{display:flex;gap:.7rem;flex-wrap:wrap;margin-top:1rem}
+table{width:100%;border-collapse:collapse}
+td{padding:.6rem .4rem;border-bottom:1px solid var(--line)}td:first-child{color:var(--pink);font-family:Orbitron;font-size:.8rem;width:38%}
+.wrap{overflow-x:auto}
+.crumb{font-family:Orbitron;font-size:.7rem;color:var(--mute);margin-bottom:1rem;text-transform:uppercase}
+footer{text-align:center;color:var(--mute);font-size:.85rem;padding:2rem 1rem;border-top:1px solid var(--line)}
+@media(max-width:700px){.split{grid-template-columns:1fr}.dd .menu{position:static}}
+html{overflow-y:scroll}
+body::before{content:"";position:fixed;top:0;left:0;width:100%;height:100vh;height:100lvh;z-index:-1;background:linear-gradient(rgba(15,4,24,.6),rgba(15,4,24,.84)),url(images/background.webp) center/cover no-repeat}
+.card,.side,.soc{backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo" onclick="go('home')">DJ NYLA</div>
+  <nav>
+    <a href="#home" data-p="home">Home</a>
+    <div class="dd"><button>Content</button><div class="menu">
+      <a href="#musik">Musik</a><a href="#gaming">Gaming</a><a href="#clips">Clips</a></div></div>
+    <div class="dd"><button onclick="go('vrchat')">VRChat</button><div class="menu">
+      <a href="#gruppen">Gruppen</a><a href="#welten">Welten</a></div></div>
+    <a href="#socials">Socials</a>
+    <a href="https://www.getshirts.de/index.php?page=shop&amp;id=einfach_nyla" target="_blank" rel="noopener noreferrer" referrerpolicy="no-referrer">Merch</a>
+    <a href="#setup">Setup</a>
+    <a href="#about">Über Nyla</a>
+  </nav>
+</header>
+<main>
+
+<section class="page" id="home">
+  <div class="bh">
+    <img class="bhimg" src="images/home-banner.webp" alt="DJ Nyla am Mischpult" loading="lazy">
+    <div class="bht">
+      <p class="crumb">Willkommen</p>
+      <h1>Zwei Seiten.<br><span>Eine Nyla.</span></h1>
+      <p>Gaming, Musik und VRChat an einem Ort. Such dir aus, worauf du heute Lust hast.</p>
+    </div>
+  </div>
+  <div class="split">
+    <button class="side m" onclick="go('musik')"><h3>Musik</h3><p>DJ-Sets und Streams. Tuesday Tunes, Naughty Mischiefnight und Morning Grove Sunday.</p><span class="btn">Zur Musik</span></button>
+    <button class="side g" onclick="go('gaming')"><h3>Gaming</h3><p>Let's Plays, Highlights und Clips vom Kanal einfach_nyla.</p><span class="btn">Zum Gaming</span></button>
+  </div>
+  <div class="home-two">
+    <div class="about-mini">
+      <h2>Über Nyla</h2>
+      <div class="card"><h3 style="margin-bottom:1rem">Hey, ich bin Nyla!</h3><a class="btn" href="#about">Mehr über Nyla</a></div>
+    </div>
+    <div class="plan-col">
+      <h2>Stream Plan</h2>
+      <div class="calframe"><iframe src="https://calendar.google.com/calendar/embed?wkst=2&ctz=Europe%2FBerlin&hl=de&mode=AGENDA&showTitle=0&showNav=0&showDate=0&showPrint=0&showTabs=0&showCalendars=0&showTz=0&src=N2E3NjNlYzFhNjMyMzNlYzhjMGRjMGI4YzNkY2IwNmU2ZDFkYzBiY2U4ODYyYjg5MzMwMjQwYmMxMWIxMzczY0Bncm91cC5jYWxlbmRhci5nb29nbGUuY29t&color=%23E83FCF" title="Stream Plan" loading="lazy"></iframe></div>
+      <p class="plannote"><a href="https://calendar.google.com/calendar/u/0?cid=N2E3NjNlYzFhNjMyMzNlYzhjMGRjMGI4YzNkY2IwNmU2ZDFkYzBiY2U4ODYyYjg5MzMwMjQwYmMxMWIxMzczY0Bncm91cC5jYWxlbmRhci5nb29nbGUuY29t" target="_blank" rel="noopener">Kalender zu meinem Google Kalender hinzufügen</a> &middot; <a href="https://calendar.google.com/calendar/ical/7a763ec1a63233ec8c0dc0b8c3dcb06e6d1dc0bce8862b89330240bc11b1373c%40group.calendar.google.com/public/basic.ics" target="_blank" rel="noopener">iCal-Adresse</a></p>
+    </div>
+  </div>
+</section>
+
+<section class="page" id="musik">
+  <p class="crumb">Content / Musik</p>
+  <h2>Musik</h2>
+  <p>Hier findest du meine Sets und die regelmäßigen Music-Streams.</p>
+  <div class="grid">
+    <div class="card"><span class="tag">Regelmäßig</span><h3>Tuesday Tunes</h3><p class="when"><span>Dienstag</span>20:00 - 21:00</p><p>Dein Wochenstart mit Musik.</p></div>
+    <div class="card"><span class="tag">Regelmäßig</span><h3>Naughty Mischiefnight</h3><p class="when"><span>Freitag</span>20:00 - 21:00</p><p>Die etwas frechere Nacht.</p></div>
+    <div class="card"><span class="tag">Regelmäßig</span><h3>Morning Grove Sunday</h3><p class="when"><span>Sonntag</span>11:00 - 12:00</p><p>Entspannter Sonntagmorgen.</p></div>
+    <div class="card"><span class="tag">Unregelmäßig</span><h3>Spontanität</h3><p class="when"><span>Spontan</span>00:00 - 00:00</p><p>Wenn mir danach ist, geht es einfach los.</p></div>
+  </div>
+  <div class="row"><a class="btn" href="https://twitch.tv/dj_nyla" target="_blank" rel="noopener">DJ_Nyla auf Twitch</a></div>
+</section>
+
+<section class="page" id="gaming">
+  <p class="crumb">Content / Gaming</p>
+  <h2>Gaming</h2>
+  <p>Was ich spiele, wann ich streame und wo du die besten Momente findest.</p>
+  <div class="grid">
+    <div class="card"><span class="tag">Regelmäßig</span><h3>Gaming</h3><p class="when"><span>Montag</span>16:00 - 21:00 Uhr</p></div>
+    <div class="card"><span class="tag">Regelmäßig</span><h3>Gaming</h3><p class="when"><span>Mittwoch</span>16:00 - 21:00 Uhr</p></div>
+    <div class="card"><span class="tag">Regelmäßig</span><h3>Gaming</h3><p class="when"><span>Donnerstag</span>16:00 - 21:00 Uhr</p></div>
+  </div>
+  <div class="row"><a class="btn" href="#clips">Zu den Clips</a><a class="btn" href="https://twitch.tv/einfach_nyla" target="_blank" rel="noopener">einfach_nyla auf Twitch</a></div>
+  <div class="sec" id="clips" style="margin-top:3rem">
+  <h2>Clips</h2>
+  <p>Die besten Momente aus dem Stream.</p>
+  <p id="clipStatus">Clips werden geladen ...</p>
+  <div class="grid" id="clipGrid"></div>
+  <div class="row"><a class="btn" href="https://www.twitch.tv/einfach_nyla/clips?range=all" target="_blank" rel="noopener">Alle Clips auf Twitch</a></div>
+  </div>
+</section>
+
+<section class="page" id="vrchat">
+  <p class="crumb">VRChat</p>
+  <div class="sec" id="gruppen">
+  <h2>VRChat-Gruppen</h2>
+  <p>Hier kannst du meinen Gruppen beitreten.</p>
+  <div class="grid">
+    <div class="card"><img class="banner" src="images/banner.webp" alt="DJ Nyla Banner" loading="lazy"><span class="tag">Gruppe</span><h3>MISCH.8432</h3><p>Tritt der Gruppe in VRChat bei.</p><a class="btn" href="https://vrc.group/MISCH.8432" target="_blank" rel="noopener">Beitreten</a></div>
+  </div>
+  </div>
+  <div class="sec" id="welten">
+  <h2>VRChat-Welten</h2>
+  <p>Meine eigenen Welten zum Besuchen.</p>
+  <div class="grid">
+    <div class="card"><img class="banner" src="images/welt-studio-thirteen.webp" alt="Studio Thirteen" loading="lazy"><span class="tag">Welt</span><h3>Studio Thirteen</h3><a class="btn" href="https://vrchat.com/home/launch?worldId=wrld_69ddd86d-12e6-4c01-902c-7a66e72d0ed0" target="_blank" rel="noopener">In VRChat öffnen</a></div>
+    <div class="card"><img class="banner" src="images/welt-astera.webp" alt="Astera" loading="lazy"><span class="tag">Welt</span><h3>Astera</h3><a class="btn" href="https://vrchat.com/home/launch?worldId=wrld_ad236d17-a734-4570-9661-bc1174b0c2d3" target="_blank" rel="noopener">In VRChat öffnen</a></div>
+    <div class="card"><img class="banner" src="images/welt-dream-cafe.webp" alt="Dream Café" loading="lazy"><span class="tag">Welt</span><h3>Dream Café</h3><a class="btn" href="https://vrchat.com/home/launch?worldId=wrld_c704a9e4-0124-4e0a-b553-94cb05fda37b" target="_blank" rel="noopener">In VRChat öffnen</a></div>
+  </div>
+  </div>
+</section>
+
+<section class="page" id="socials">
+  <p class="crumb">Socials</p>
+  <h2>Socials</h2>
+  <div class="soc-row">
+    <a class="soc" href="https://twitch.tv/dj_nyla" target="_blank" rel="noopener"><span class="ic" style="color:#9146ff"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11.571 4.714h1.715v5.143H11.57zm4.715 0H18v5.143h-1.714zM6 0L1.714 4.286v15.428h5.143V24l4.286-4.286h3.428L22.286 12V0zm14.571 11.143l-3.428 3.428h-3.429l-3 3v-3H6.857V1.714h13.714Z"/></svg></span><span class="nm">Twitch Musik</span><span class="sb">DJ-Sets live</span></a>
+    <a class="soc" href="https://twitch.tv/einfach_nyla" target="_blank" rel="noopener"><span class="ic" style="color:#9146ff"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11.571 4.714h1.715v5.143H11.57zm4.715 0H18v5.143h-1.714zM6 0L1.714 4.286v15.428h5.143V24l4.286-4.286h3.428L22.286 12V0zm14.571 11.143l-3.428 3.428h-3.429l-3 3v-3H6.857V1.714h13.714Z"/></svg></span><span class="nm">Twitch Gaming</span><span class="sb">Gaming live</span></a>
+    <a class="soc" href="https://www.youtube.com/channel/UCLgxtNxTCaDegJPW9U_cwjQ" target="_blank" rel="noopener"><span class="ic" style="color:#ff0000"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></span><span class="nm">YouTube</span><span class="sb">Videos &amp; Content</span></a>
+    <a class="soc" href="https://bsky.app/profile/xmetyx.bsky.social" target="_blank" rel="noopener"><span class="ic" style="color:#1185fe"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5.202 2.857C7.954 4.922 10.913 9.11 12 11.358c1.087-2.247 4.046-6.436 6.798-8.501C20.783 1.366 24 .213 24 3.883c0 .732-.42 6.156-.667 7.037-.856 3.061-3.978 3.842-6.755 3.37 4.854.826 6.089 3.562 3.422 6.299-5.065 5.196-7.28-1.304-7.847-2.97-.104-.305-.152-.448-.153-.327 0-.121-.05.022-.153.327-.568 1.666-2.782 8.166-7.847 2.97-2.667-2.737-1.432-5.473 3.422-6.3-2.777.473-5.899-.308-6.755-3.369C.42 10.04 0 4.615 0 3.883c0-3.67 3.217-2.517 5.202-1.026"/></svg></span><span class="nm">Bluesky</span><span class="sb">Updates &amp; Posts</span></a>
+    <a class="soc" href="https://www.tiktok.com/@einfach_mety" target="_blank" rel="noopener"><span class="ic" style="color:#000000"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg></span><span class="nm">TikTok</span><span class="sb">Shorts &amp; Clips</span></a>
+    <a class="soc" href="https://discord.gg/bCM5s7dnZ2" target="_blank" rel="noopener"><span class="ic" style="color:#5865f2"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.317 4.3698a19.7913 19.7913 0 00-4.8851-1.5152.0741.0741 0 00-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 00-.0785-.037 19.7363 19.7363 0 00-4.8852 1.515.0699.0699 0 00-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 00.0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 00.0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 00-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 01-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 01.0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0739.0739 0 01.0785.0095c.1202.099.246.1981.3728.2924a.077.077 0 01-.0066.1276 12.2986 12.2986 0 01-1.873.8914.0766.0766 0 00-.0407.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 00.0842.0286c1.961-.6067 3.9495-1.5219 6.0023-3.0294a.077.077 0 00.0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 00-.0312-.0286zM8.02 15.3312c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9555-2.4189 2.157-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.9555 2.4189-2.1569 2.4189zm7.9748 0c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9554-2.4189 2.1569-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.946 2.4189-2.1568 2.4189Z"/></svg></span><span class="nm">Discord</span><span class="sb">Join the community</span></a>
+  </div>
+  <h2 style="margin-top:3rem">Support</h2>
+  <p>Wenn du mich unterstützen möchtest, schau gern auf meinen Wunschlisten vorbei.</p>
+  <div class="soc-row sup">
+    <a class="soc" href="https://www.amazon.de/hz/wishlist/ls/V5QP385OWQRG?ref_=wl_share" target="_blank" rel="noopener"><span class="ic" style="color:#ff2d7a"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></span><span class="nm">MetY</span><span class="sb">Amazon-Wunschliste</span></a>
+    <a class="soc" href="https://www.amazon.de/hz/wishlist/ls/TJV131MEK6CW?ref_=wl_share" target="_blank" rel="noopener"><span class="ic" style="color:#ff2d7a"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></span><span class="nm">Ma'irra</span><span class="sb">Amazon-Wunschliste</span></a>
+  </div>
+</section>
+
+<section class="page" id="setup">
+  <p class="crumb">Setup</p>
+  <h2>Mein Setup</h2>
+  <p>Hardware und Equipment, mit dem ich streame und auflege.</p>
+  <div class="grid setup">
+    <div class="card"><h3>Hardware</h3><div class="wrap"><table><tr><td>Tower</td><td>Sharkoon M-25W</td></tr><tr><td>Mainboard</td><td>msi x470 Gaming pro Carbon</td></tr><tr><td>CPU</td><td>AMD Ryzen 7 1700x 3,4 Ghz</td></tr><tr><td>CPU Kühler</td><td>Alpenföhn Ben Nevis</td></tr><tr><td>GPU</td><td>msi GeForce 1070ti 8GB GDDR5</td></tr><tr><td>RAM</td><td>16GB Ballistix Sport (2x 8GB) DDR4 2400MHz</td></tr><tr><td>Netzteil</td><td>Be quiet Pure Power 10 500W</td></tr><tr><td>Festplatte C:</td><td>M2-SSD 512GB</td></tr><tr><td>Festplatte D:</td><td>HDD 2TB</td></tr><tr><td>Festplatte E:</td><td>SSD 1TB</td></tr></table></div></div>
+    <div class="card"><h3>Bildschirme</h3><div class="wrap"><table><tr><td>1 Mitte</td><td>Acer VG270 75Hz 27"</td></tr><tr><td>2 Links</td><td>Samsung S24D390 60Hz 24"</td></tr><tr><td>3 Rechts</td><td>LG Flatron E2241 60Hz 22"</td></tr><tr><td>4 Racing</td><td>Samsung Smart TV 60Hz 40"</td></tr><tr><td>5 Extern</td><td>Meta Quest 3</td></tr></table></div></div>
+    <div class="card"><h3>Eingabegeräte</h3><div class="wrap"><table><tr><td>Maus</td><td>Logitech G203 Lightsync Gaming Mouse</td></tr><tr><td>Tastatur</td><td>Sharkoon Skiller Mech SGK 3</td></tr><tr><td>Controller</td><td>XBox 360</td></tr><tr><td>Tablet</td><td>Wacom Intuos CTH-680</td></tr><tr><td>Wheelbase/Lenkrad</td><td>Thrustmaster T300RS GT Edition</td></tr></table></div></div>
+    <div class="card"><h3>Audio</h3><div class="wrap"><table><tr><td>Mikrofon</td><td>Rode NT-USB</td></tr><tr><td>Headset</td><td>Soundcore Q30</td></tr><tr><td>DJ Controller</td><td>PIONEER DJ AlphaTheta DDJ-FLX2</td></tr><tr><td>DJ Controller</td><td>Numark Mixstream Pro Go</td></tr></table></div></div>
+    <div class="card"><h3>Video</h3><div class="wrap"><table><tr><td>Kamera (Fotografie)</td><td>Canon Eos 2000D</td></tr><tr><td>Kamera (Stream)</td><td>Trust Trino 720p</td></tr><tr><td>Smartphone (IRL)</td><td>motorola moto e22</td></tr></table></div></div>
+  </div>
+</section>
+
+<section class="page" id="about">
+  <p class="crumb">Über Nyla</p>
+  <h2>Über Nyla</h2>
+  <div class="ab">
+    <img class="portrait" src="images/nyla-1.webp" alt="Nyla" loading="lazy">
+    <div>
+      <h3>Hey, ich bin Nyla!</h3>
+      <p>Willkommen in meiner kleinen Welt!</p>
+      <p>leidenschaftliche Streamerin, Gaming- und Musikliebhaberin, Katzenfan und ein kleiner Furry-Nerd.</p>
+      <p>Mit dem Streamen habe ich 2016 angefangen und seitdem ist es für mich viel mehr als nur ein Hobby. Ich liebe es, gemeinsam mit anderen zu zocken, Musik zu genießen, zu lachen und eine Community aufzubauen, in der sich jeder willkommen und wohlfühlen kann.</p>
+    </div>
+  </div>
+  <div class="ab rev">
+    <img class="portrait" src="images/nyla-2.webp" alt="Nyla als Furry-Avatar" loading="lazy">
+    <div>
+      <p>Ich bin eine stolze Transfrau und glaube daran, dass jeder Mensch seinen eigenen Weg gehen kann und sich selbst treu bleiben sollte. Sei einfach du selbst – denn genau so bist du richtig.</p>
+      <p>Abseits vom Gaming schlägt mein Herz für Körperschmuck, Tattoos und natürlich Katzen. Ich liebe alternative Styles, kreative Welten und alles, was Persönlichkeit zeigt. Und wenn irgendwo ein bisschen Furry-Stuff dabei ist, bin ich natürlich auch nicht weit entfernt. :3</p>
+    </div>
+  </div>
+  <p>Ob Gaming, Musik, gemütliche Streams oder einfach eine gute Zeit miteinander – ich freue mich über jeden, der Teil meiner kleinen Welt werden möchte.</p>
+  <p>Schön, dass du hier bist!</p>
+  <p>Kiss, Nyla 💋</p>
+</section>
+
+</main>
+<footer>DJ Nyla</footer>
+<script>
+const pages=[...document.querySelectorAll('.page')].map(p=>p.id);
+function go(id){location.hash=id}
+const alias={gruppen:'vrchat',welten:'vrchat',clips:'gaming'};
+const CLIPS_URL='https://lighthearted-starship-97edf3.netlify.app/.netlify/functions/clips';
+let clipsLoaded=false;
+async function loadClips(){
+  clipsLoaded=true;
+  const st=document.getElementById('clipStatus'),grid=document.getElementById('clipGrid');
+  try{
+    const res=await fetch(CLIPS_URL);
+    const data=await res.json();
+    const sorted=data.data.sort((a,b)=>new Date(b.created_at)-new Date(a.created_at));
+    st.style.display='none';grid.innerHTML='';
+    sorted.forEach(clip=>{
+      const card=document.createElement('a');
+      card.className='card clipc';card.href=clip.url;card.target='_blank';card.rel='noopener';
+      const th=document.createElement('div');th.className='th';
+      const im=document.createElement('img');im.src=clip.thumbnail_url;im.alt=clip.title||'Clip';im.loading='lazy';th.appendChild(im);
+      const du=document.createElement('div');du.className='dur';du.textContent=Math.floor(clip.duration)+'s';th.appendChild(du);
+      const bd=document.createElement('div');bd.className='bd';
+      const ti=document.createElement('h3');ti.textContent=clip.title||'Clip';
+      const me=document.createElement('div');me.className='meta';
+      me.textContent=clip.view_count+' Views \u00b7 '+new Date(clip.created_at).toLocaleDateString('de-DE');
+      bd.appendChild(ti);bd.appendChild(me);
+      card.appendChild(th);card.appendChild(bd);grid.appendChild(card);
+    });
+  }catch(e){st.textContent='Clips konnten nicht geladen werden.'}
+}
+function render(){
+  const h=location.hash.slice(1);
+  let id=alias[h]||h;
+  if(!pages.includes(id)) id='home';
+  document.querySelectorAll('.page').forEach(p=>p.classList.toggle('show',p.id===id));
+  document.querySelectorAll('nav a').forEach(a=>a.classList.toggle('active',a.getAttribute('href')==='#'+id));
+  document.querySelector('main').classList.toggle('wide',id==='setup');
+  window.scrollTo(0,0);
+  if(id==='gaming'&&!clipsLoaded)loadClips();
+  if(alias[h]){const t=document.getElementById(h);if(t)t.scrollIntoView({behavior:'smooth'})}
+}
+window.addEventListener('hashchange',render);
+render();
+</script>
+</body>
+</html>
