@@ -56,7 +56,7 @@ p{color:var(--mute);margin-bottom:1rem;max-width:65ch}
 .bh .bht{flex:1;display:flex;flex-direction:column;justify-content:center;padding:2rem 2rem 2rem .5rem}
 .bh h1{font-size:clamp(2rem,4.6vw,3.6rem)}.bh h1 span{color:var(--pink);text-shadow:0 0 22px #e83fcf99}
 @media(max-width:700px){.bh{flex-direction:column;min-height:0}.bh .bhimg{width:100%;max-width:none;height:300px;object-position:center top;-webkit-mask-image:linear-gradient(to bottom,#000 62%,transparent);mask-image:linear-gradient(to bottom,#000 62%,transparent)}.bh .bht{padding:0 1.2rem 1.6rem;text-align:center}}
-.soc-row.sup{grid-template-columns:repeat(auto-fill,minmax(150px,1fr))}
+#socials{scroll-margin-top:100px}
 main.wide{max-width:1500px}
 .setup{grid-template-columns:repeat(5,minmax(0,1fr));align-items:stretch}
 .setup tr{display:block;padding:.45rem 0;border-bottom:1px solid var(--line)}
@@ -144,12 +144,12 @@ body::before{content:"";position:fixed;top:0;left:0;width:100%;height:100vh;heig
   <div class="logo" onclick="go('home')">DJ NYLA</div>
   <nav>
     <a href="#home" data-p="home">Home</a>
+    <a href="#socials">Socials</a>
     <div class="dd"><button>Content</button><div class="menu">
       <a href="#musik">Musik</a><a href="#gaming">Gaming</a><a href="#clips">Clips</a></div></div>
     <div class="dd"><button onclick="go('vrchat')">VRChat</button><div class="menu">
       <a href="#gruppen">Gruppen</a><a href="#welten">Welten</a></div></div>
-    <a href="#news">News</a>
-    <a href="#socials">Socials</a>
+    <a href="#infos">Infos</a>
     <a href="https://www.getshirts.de/index.php?page=shop&amp;id=einfach_nyla" target="_blank" rel="noopener noreferrer" referrerpolicy="no-referrer">Merch</a>
     <a href="#setup">Setup</a>
     <a href="#about">Über Nyla</a>
@@ -173,10 +173,18 @@ body::before{content:"";position:fixed;top:0;left:0;width:100%;height:100vh;heig
       </div>
     </div>
   </div>
+  <div class="soc-row" id="socials" style="margin-top:2rem">
+    <a class="soc" href="https://twitch.tv/dj_nyla" target="_blank" rel="noopener"><span class="ic" style="color:#9146ff"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11.571 4.714h1.715v5.143H11.57zm4.715 0H18v5.143h-1.714zM6 0L1.714 4.286v15.428h5.143V24l4.286-4.286h3.428L22.286 12V0zm14.571 11.143l-3.428 3.428h-3.429l-3 3v-3H6.857V1.714h13.714Z"/></svg></span><span class="nm">Twitch Musik</span><span class="sb">DJ-Sets live</span></a>
+    <a class="soc" href="https://twitch.tv/einfach_nyla" target="_blank" rel="noopener"><span class="ic" style="color:#9146ff"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11.571 4.714h1.715v5.143H11.57zm4.715 0H18v5.143h-1.714zM6 0L1.714 4.286v15.428h5.143V24l4.286-4.286h3.428L22.286 12V0zm14.571 11.143l-3.428 3.428h-3.429l-3 3v-3H6.857V1.714h13.714Z"/></svg></span><span class="nm">Twitch Gaming</span><span class="sb">Gaming live</span></a>
+    <a class="soc" href="https://www.youtube.com/channel/UCLgxtNxTCaDegJPW9U_cwjQ" target="_blank" rel="noopener"><span class="ic" style="color:#ff0000"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></span><span class="nm">YouTube</span><span class="sb">Videos &amp; Content</span></a>
+    <a class="soc" href="https://bsky.app/profile/xmetyx.bsky.social" target="_blank" rel="noopener"><span class="ic" style="color:#1185fe"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5.202 2.857C7.954 4.922 10.913 9.11 12 11.358c1.087-2.247 4.046-6.436 6.798-8.501C20.783 1.366 24 .213 24 3.883c0 .732-.42 6.156-.667 7.037-.856 3.061-3.978 3.842-6.755 3.37 4.854.826 6.089 3.562 3.422 6.299-5.065 5.196-7.28-1.304-7.847-2.97-.104-.305-.152-.448-.153-.327 0-.121-.05.022-.153.327-.568 1.666-2.782 8.166-7.847 2.97-2.667-2.737-1.432-5.473 3.422-6.3-2.777.473-5.899-.308-6.755-3.369C.42 10.04 0 4.615 0 3.883c0-3.67 3.217-2.517 5.202-1.026"/></svg></span><span class="nm">Bluesky</span><span class="sb">Updates &amp; Posts</span></a>
+    <a class="soc" href="https://www.tiktok.com/@einfach_mety" target="_blank" rel="noopener"><span class="ic" style="color:#000000"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg></span><span class="nm">TikTok</span><span class="sb">Shorts &amp; Clips</span></a>
+    <a class="soc" href="https://discord.gg/bCM5s7dnZ2" target="_blank" rel="noopener"><span class="ic" style="color:#5865f2"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.317 4.3698a19.7913 19.7913 0 00-4.8851-1.5152.0741.0741 0 00-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 00-.0785-.037 19.7363 19.7363 0 00-4.8852 1.515.0699.0699 0 00-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 00.0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 00.0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 00-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 01-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 01.0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0739.0739 0 01.0785.0095c.1202.099.246.1981.3728.2924a.077.077 0 01-.0066.1276 12.2986 12.2986 0 01-1.873.8914.0766.0766 0 00-.0407.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 00.0842.0286c1.961-.6067 3.9495-1.5219 6.0023-3.0294a.077.077 0 00.0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 00-.0312-.0286zM8.02 15.3312c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9555-2.4189 2.157-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.9555 2.4189-2.1569 2.4189zm7.9748 0c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9554-2.4189 2.1569-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.946 2.4189-2.1568 2.4189Z"/></svg></span><span class="nm">Discord</span><span class="sb">Join the community</span></a>
+  </div>
   <div class="home-two">
     <div class="card stream-plan nw">
       <div class="stream-plan-title">Neueste Info</div>
-      <div id="newsHome"><p class="t">Noch keine News.</p></div>
+      <div id="newsHome"><p class="t">Noch keine Infos.</p></div>
     </div>
     <div class="plan-col">
       <div id="streamPlan" class="stream-plan" aria-label="Streamplan für die aktuelle Kalenderwoche">
@@ -238,29 +246,10 @@ body::before{content:"";position:fixed;top:0;left:0;width:100%;height:100vh;heig
   </div>
 </section>
 
-<section class="page" id="socials">
-  <p class="crumb">Socials</p>
-  <h2>Socials</h2>
-  <div class="soc-row">
-    <a class="soc" href="https://twitch.tv/dj_nyla" target="_blank" rel="noopener"><span class="ic" style="color:#9146ff"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11.571 4.714h1.715v5.143H11.57zm4.715 0H18v5.143h-1.714zM6 0L1.714 4.286v15.428h5.143V24l4.286-4.286h3.428L22.286 12V0zm14.571 11.143l-3.428 3.428h-3.429l-3 3v-3H6.857V1.714h13.714Z"/></svg></span><span class="nm">Twitch Musik</span><span class="sb">DJ-Sets live</span></a>
-    <a class="soc" href="https://twitch.tv/einfach_nyla" target="_blank" rel="noopener"><span class="ic" style="color:#9146ff"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11.571 4.714h1.715v5.143H11.57zm4.715 0H18v5.143h-1.714zM6 0L1.714 4.286v15.428h5.143V24l4.286-4.286h3.428L22.286 12V0zm14.571 11.143l-3.428 3.428h-3.429l-3 3v-3H6.857V1.714h13.714Z"/></svg></span><span class="nm">Twitch Gaming</span><span class="sb">Gaming live</span></a>
-    <a class="soc" href="https://www.youtube.com/channel/UCLgxtNxTCaDegJPW9U_cwjQ" target="_blank" rel="noopener"><span class="ic" style="color:#ff0000"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></span><span class="nm">YouTube</span><span class="sb">Videos &amp; Content</span></a>
-    <a class="soc" href="https://bsky.app/profile/xmetyx.bsky.social" target="_blank" rel="noopener"><span class="ic" style="color:#1185fe"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5.202 2.857C7.954 4.922 10.913 9.11 12 11.358c1.087-2.247 4.046-6.436 6.798-8.501C20.783 1.366 24 .213 24 3.883c0 .732-.42 6.156-.667 7.037-.856 3.061-3.978 3.842-6.755 3.37 4.854.826 6.089 3.562 3.422 6.299-5.065 5.196-7.28-1.304-7.847-2.97-.104-.305-.152-.448-.153-.327 0-.121-.05.022-.153.327-.568 1.666-2.782 8.166-7.847 2.97-2.667-2.737-1.432-5.473 3.422-6.3-2.777.473-5.899-.308-6.755-3.369C.42 10.04 0 4.615 0 3.883c0-3.67 3.217-2.517 5.202-1.026"/></svg></span><span class="nm">Bluesky</span><span class="sb">Updates &amp; Posts</span></a>
-    <a class="soc" href="https://www.tiktok.com/@einfach_mety" target="_blank" rel="noopener"><span class="ic" style="color:#000000"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg></span><span class="nm">TikTok</span><span class="sb">Shorts &amp; Clips</span></a>
-    <a class="soc" href="https://discord.gg/bCM5s7dnZ2" target="_blank" rel="noopener"><span class="ic" style="color:#5865f2"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.317 4.3698a19.7913 19.7913 0 00-4.8851-1.5152.0741.0741 0 00-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 00-.0785-.037 19.7363 19.7363 0 00-4.8852 1.515.0699.0699 0 00-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 00.0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 00.0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 00-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 01-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 01.0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0739.0739 0 01.0785.0095c.1202.099.246.1981.3728.2924a.077.077 0 01-.0066.1276 12.2986 12.2986 0 01-1.873.8914.0766.0766 0 00-.0407.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 00.0842.0286c1.961-.6067 3.9495-1.5219 6.0023-3.0294a.077.077 0 00.0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 00-.0312-.0286zM8.02 15.3312c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9555-2.4189 2.157-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.9555 2.4189-2.1569 2.4189zm7.9748 0c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9554-2.4189 2.1569-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.946 2.4189-2.1568 2.4189Z"/></svg></span><span class="nm">Discord</span><span class="sb">Join the community</span></a>
-  </div>
-  <h2 style="margin-top:3rem">Support</h2>
-  <p>Wenn du mich unterstützen möchtest, schau gern auf meinen Wunschlisten vorbei.</p>
-  <div class="soc-row sup">
-    <a class="soc" href="https://www.amazon.de/hz/wishlist/ls/V5QP385OWQRG?ref_=wl_share" target="_blank" rel="noopener"><span class="ic" style="color:#ff2d7a"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></span><span class="nm">MetY</span><span class="sb">Amazon-Wunschliste</span></a>
-    <a class="soc" href="https://www.amazon.de/hz/wishlist/ls/TJV131MEK6CW?ref_=wl_share" target="_blank" rel="noopener"><span class="ic" style="color:#ff2d7a"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></span><span class="nm">Ma'irra</span><span class="sb">Amazon-Wunschliste</span></a>
-  </div>
-</section>
-
-<section class="page" id="news">
-  <p class="crumb">News</p>
-  <h2>News</h2>
-  <div id="newsList"><p>News werden geladen ...</p></div>
+<section class="page" id="infos">
+  <p class="crumb">Infos</p>
+  <h2>Infos</h2>
+  <div id="newsList"><p>Infos werden geladen ...</p></div>
 </section>
 
 <section class="page" id="setup">
@@ -305,7 +294,7 @@ body::before{content:"";position:fixed;top:0;left:0;width:100%;height:100vh;heig
 <script>
 const pages=[...document.querySelectorAll('.page')].map(p=>p.id);
 function go(id){location.hash=id}
-const alias={gruppen:'vrchat',welten:'vrchat',clips:'gaming'};
+const alias={gruppen:'vrchat',welten:'vrchat',clips:'gaming',socials:'home'};
 const CLIPS_URL='https://lighthearted-starship-97edf3.netlify.app/.netlify/functions/clips';
 let clipsLoaded=false;
 async function loadClips(){
@@ -336,13 +325,14 @@ function render(){
   let id=alias[h]||h;
   if(!pages.includes(id)) id='home';
   document.querySelectorAll('.page').forEach(p=>p.classList.toggle('show',p.id===id));
-  document.querySelectorAll('nav a').forEach(a=>a.classList.toggle('active',a.getAttribute('href')==='#'+id));
+  document.querySelectorAll('nav a').forEach(a=>a.classList.toggle('active',a.getAttribute('href')==='#'+(h==='socials'?'socials':id)));
   document.querySelector('main').classList.toggle('wide',id==='setup');
   window.scrollTo(0,0);
   if(id==='gaming'&&!clipsLoaded)loadClips();
   if(alias[h]){const t=document.getElementById(h);if(t)t.scrollIntoView({behavior:'smooth'})}
 }
 window.addEventListener('hashchange',render);
+document.querySelector('nav a[href="#socials"]').addEventListener('click',()=>{if(location.hash==='#socials')render()});
 render();
 
 async function loadStreamPlan(){
@@ -404,7 +394,7 @@ async function loadNews(){
     const tk=items.filter(i=>rank[i.size]!==undefined&&(i.pinned||now-new Date(i.date)<NEWS_DAYS*864e5))
       .sort((a,b)=>(b.pinned?1:0)-(a.pinned?1:0)||rank[a.size]-rank[b.size]).slice(0,3);
     tick.replaceChildren(...tk.map(i=>{
-      const a=el('a','tk '+i.size);a.href='#news';mark(a,i);
+      const a=el('a','tk '+i.size);a.href='#infos';mark(a,i);
       a.append(el('span','d',fmtD(i.date)),badges(i),el('b',null,i.title));
       if(i.size!=='small'){const t=el('span','t',i.text);a.append(i.size==='large'?el('br'):'',t)}
       return a;
@@ -415,11 +405,11 @@ async function loadNews(){
       const i=newest,t=i.text.length>180?i.text.slice(0,180).trimEnd()+' …':i.text;
       const tag=el('div','tag');tag.append(badges(i),fmtD(i.date));
       home.replaceChildren(tag,el('h3',null,i.title),el('p','t',t));
-      const b=el('a','btn alt','Alle News');b.href='#news';home.append(b);
+      const b=el('a','btn alt','Alle Infos');b.href='#infos';home.append(b);
     }
     // News-Reiter: Aussehen je nach Größe
     list.replaceChildren();
-    if(!items.length) list.append(el('p',null,'Noch keine News.'));
+    if(!items.length) list.append(el('p',null,'Noch keine Infos.'));
     for(const i of items){
       const c=el('div','card ni '+(i.size==='large'||i.size==='small'?i.size:'medium'));mark(c,i);
       const tag=el('div','tag');tag.append(badges(i),fmtD(i.date));
@@ -429,7 +419,7 @@ async function loadNews(){
       list.append(c);
     }
   }catch(e){
-    list.replaceChildren(el('p',null,'News konnten nicht geladen werden.'));
+    list.replaceChildren(el('p',null,'Infos konnten nicht geladen werden.'));
   }
 }
 loadNews();
