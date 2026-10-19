@@ -124,6 +124,17 @@ body::before{content:"";position:fixed;top:0;left:0;width:100%;height:100vh;heig
 .tk.small{padding:.3rem .8rem;font-size:.9rem}.tk.small b{font-size:.75rem;color:var(--cyan)}
 .ni{margin-bottom:1rem}.ni img{max-width:100%;border-radius:8px;margin:.5rem 0}.ni .t{white-space:pre-line;color:var(--text)}
 .nw .t{color:var(--mute);margin:.3rem 0 1rem}
+.badge{display:inline-block;font-family:Orbitron,sans-serif;font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;padding:.15rem .55rem;border-radius:20px;margin-right:.45rem;vertical-align:middle}
+.badge.cat{color:var(--c);border:1px solid var(--c);background:color-mix(in srgb,var(--c) 15%,transparent)}
+.badge.pin{background:#ffd23f;color:#1a1200}.badge.pin.red{background:#ff4d5e;color:#fff}
+.tk.cat{border-left:4px solid var(--c)}
+.tk.pinned{border-color:#ffd23f}.tk.pinned.red{border-color:#ff4d5e}
+.ni.cat{border-left:4px solid var(--c)}
+.ni.pinned{border-color:#ffd23f}.ni.pinned.red{border-color:#ff4d5e}
+.ni.large{padding:1.6rem 1.5rem;border-color:var(--pink);box-shadow:0 0 28px #e83fcf44;background:linear-gradient(145deg,#0b0314,#1b0730 58%,#10031c)}
+.ni.large h3{font-size:1.5rem;color:var(--pink);text-shadow:0 0 14px #e83fcf88}
+.ni.large.pinned{border-color:#ffd23f}.ni.large.pinned.red{border-color:#ff4d5e}
+.ni.small{padding:.6rem 1rem}.ni.small h3{font-size:.95rem;margin-bottom:.1rem}.ni.small .t{font-size:.95rem;margin-bottom:.4rem}.ni.small img{max-height:90px}
 </style>
 </head>
 <body>
@@ -362,38 +373,57 @@ async function loadStreamPlan(){
 loadStreamPlan();
 
 const NEWS_DAYS=14;
+const CAT={vrchat:['VRChat','#b983ff'],outfits:['Outfits','#ff77d0'],gaming:['Gaming','#5aa9ff'],musik:['Musik','#2fe0d0']};
 const okUrl=u=>/^https?:\/\//i.test(u||'');
 const okImg=u=>/^(https:\/\/|images\/)/i.test(u||'')&&!String(u).includes('..');
 const fmtD=d=>{const x=new Date(d);return isNaN(x)?d:x.toLocaleDateString('de-DE')};
+const isRed=i=>!/wichtig/i.test(i.pin_label||'Wichtig');
 function el(tag,cls,txt){const e=document.createElement(tag);if(cls)e.className=cls;if(txt!=null)e.textContent=txt;return e}
+function badges(i){
+  const w=el('span');
+  if(i.pinned) w.append(el('span','badge pin'+(isRed(i)?' red':''),i.pin_label||'Wichtig'));
+  const c=CAT[i.category];
+  if(c){const b=el('span','badge cat',c[0]);b.style.setProperty('--c',c[1]);w.append(b)}
+  return w;
+}
+function mark(e,i){
+  const c=CAT[i.category];
+  if(c){e.classList.add('cat');e.style.setProperty('--c',c[1])}
+  if(i.pinned) e.classList.add('pinned',...(isRed(i)?['red']:[]));
+}
 async function loadNews(){
   const tick=document.getElementById('ticker'),home=document.getElementById('newsHome'),list=document.getElementById('newsList');
   try{
     const r=await fetch('data/news.json',{cache:'no-store'});
     if(!r.ok) throw new Error('keine news.json');
-    const items=((await r.json()).items||[]).slice().sort((a,b)=>String(b.date).localeCompare(String(a.date)));
-    // Ticker: neueste Beiträge der letzten NEWS_DAYS Tage, große zuerst, maximal 3
+    // neueste zuerst; angeheftete Meldungen bleiben oben
+    const items=((await r.json()).items||[]).slice().sort((a,b)=>String(b.date).localeCompare(String(a.date)))
+      .sort((a,b)=>(b.pinned?1:0)-(a.pinned?1:0));
+    // Ticker: angeheftete immer, sonst die der letzten NEWS_DAYS Tage; große zuerst, maximal 3
     const rank={large:0,medium:1,small:2},now=Date.now();
-    const tk=items.filter(i=>rank[i.size]!==undefined&&now-new Date(i.date)<NEWS_DAYS*864e5)
-      .sort((a,b)=>rank[a.size]-rank[b.size]).slice(0,3);
+    const tk=items.filter(i=>rank[i.size]!==undefined&&(i.pinned||now-new Date(i.date)<NEWS_DAYS*864e5))
+      .sort((a,b)=>(b.pinned?1:0)-(a.pinned?1:0)||rank[a.size]-rank[b.size]).slice(0,3);
     tick.replaceChildren(...tk.map(i=>{
-      const a=el('a','tk '+i.size);a.href='#news';
-      a.append(el('span','d',fmtD(i.date)),el('b',null,i.title));
+      const a=el('a','tk '+i.size);a.href='#news';mark(a,i);
+      a.append(el('span','d',fmtD(i.date)),badges(i),el('b',null,i.title));
       if(i.size!=='small'){const t=el('span','t',i.text);a.append(i.size==='large'?el('br'):'',t)}
       return a;
     }));
-    // Startseite: neueste Info
-    if(items[0]){
-      const i=items[0],t=i.text.length>180?i.text.slice(0,180).trimEnd()+' …':i.text;
-      home.replaceChildren(el('div','tag',fmtD(i.date)),el('h3',null,i.title),el('p','t',t));
+    // Startseite: neueste Info (nach Datum)
+    const newest=items.slice().sort((a,b)=>String(b.date).localeCompare(String(a.date)))[0];
+    if(newest){
+      const i=newest,t=i.text.length>180?i.text.slice(0,180).trimEnd()+' …':i.text;
+      const tag=el('div','tag');tag.append(badges(i),fmtD(i.date));
+      home.replaceChildren(tag,el('h3',null,i.title),el('p','t',t));
       const b=el('a','btn alt','Alle News');b.href='#news';home.append(b);
     }
-    // News-Reiter
+    // News-Reiter: Aussehen je nach Größe
     list.replaceChildren();
     if(!items.length) list.append(el('p',null,'Noch keine News.'));
     for(const i of items){
-      const c=el('div','card ni');
-      c.append(el('div','tag',fmtD(i.date)),el('h3',null,i.title),el('p','t',i.text));
+      const c=el('div','card ni '+(i.size==='large'||i.size==='small'?i.size:'medium'));mark(c,i);
+      const tag=el('div','tag');tag.append(badges(i),fmtD(i.date));
+      c.append(tag,el('h3',null,i.title),el('p','t',i.text));
       if(okImg(i.image)){const im=el('img');im.src=i.image;im.alt='';im.loading='lazy';c.append(im)}
       if(okUrl(i.link)){const a=el('a','btn',i.link_label||'Mehr Infos');a.href=i.link;a.target='_blank';a.rel='noopener';c.append(a)}
       list.append(c);
