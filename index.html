@@ -77,10 +77,11 @@ main.wide{max-width:1500px}
 .clipc h3{font-family:Rajdhani,sans-serif;font-size:1rem;font-weight:600;letter-spacing:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:.3rem}
 .clipc .meta{font-family:Orbitron,sans-serif;font-size:.55rem;letter-spacing:.12em;color:var(--mute)}
 .clipc:hover{border-color:var(--pink);box-shadow:0 0 18px #e83fcf44}
-.home-two{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,440px);gap:2rem;align-items:start;margin-top:3rem}
+.home-two{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:2rem;align-items:stretch;margin-top:3rem}
+.home-two .card{height:calc(100% - 3rem)}
 .home-two h2{margin-top:0}
-.plan-col{width:100%;min-width:0}
-@media(max-width:800px){.home-two{grid-template-columns:1fr}.plan-col{max-width:460px;width:100%;margin:0 auto}}
+.plan-col{width:100%;min-width:0;max-width:560px;margin:2.5rem auto 0}
+@media(max-width:800px){.home-two{grid-template-columns:1fr}.home-two .card{height:auto}}
 .card .tag{font-size:.7rem;font-family:Orbitron;color:var(--cyan);text-transform:uppercase;letter-spacing:.1em}
 .card .when{color:var(--text);font-weight:600;margin:0 0 .6rem;font-size:1rem}.card .when span{color:var(--pink);font-family:Orbitron;font-size:.8rem;display:block;letter-spacing:.06em;text-transform:uppercase;margin-bottom:.1rem}
 .ph{aspect-ratio:16/9;border:1px dashed var(--line);border-radius:8px;display:grid;place-items:center;color:var(--mute);font-size:.85rem;margin-bottom:.8rem;text-align:center;padding:.5rem}
@@ -109,6 +110,20 @@ body::before{content:"";position:fixed;top:0;left:0;width:100%;height:100vh;heig
 .stream-plan-name{font-family:Rajdhani,sans-serif;font-size:1.2rem;font-weight:600;color:var(--text);line-height:1.25;overflow-wrap:anywhere}
 .stream-plan-loading{font-family:Rajdhani,sans-serif;color:var(--mute);text-align:center}
 @media(max-width:480px){.stream-plan{padding:.65rem}.stream-plan-row{grid-template-columns:58px minmax(0,1fr);gap:.35rem}.stream-plan-day{font-size:1rem}.stream-plan-event{padding:.45rem .55rem}.stream-plan-name{font-size:1.05rem}}
+
+#ticker{max-width:1100px;margin:.8rem auto 0;padding:0 1.2rem;display:grid;gap:.5rem}
+#ticker:empty{display:none}
+.tk{display:block;text-decoration:none;color:var(--text);border:1px solid var(--line);background:var(--panel);border-radius:10px;backdrop-filter:blur(6px)}
+.tk:hover{border-color:var(--pink)}
+.tk .d{font-family:Orbitron,sans-serif;font-size:.6rem;letter-spacing:.1em;color:var(--mute);margin-right:.6rem}
+.tk b{font-family:Orbitron,sans-serif;letter-spacing:.04em}
+.tk .t{white-space:pre-line}
+.tk.large{padding:1.1rem 1.3rem;border-color:var(--pink);box-shadow:0 0 28px #e83fcf44;background:linear-gradient(145deg,#0b0314,#1b0730 58%,#10031c)}
+.tk.large b{display:block;font-size:clamp(1.2rem,3vw,1.8rem);color:var(--pink);text-shadow:0 0 14px #e83fcf88;margin:.2rem 0}
+.tk.medium{padding:.65rem 1rem}.tk.medium b{color:var(--pink);font-size:.95rem}.tk.medium .t{color:var(--mute);margin-left:.6rem}
+.tk.small{padding:.3rem .8rem;font-size:.9rem}.tk.small b{font-size:.75rem;color:var(--cyan)}
+.ni{margin-bottom:1rem}.ni img{max-width:100%;border-radius:8px;margin:.5rem 0}.ni .t{white-space:pre-line;color:var(--text)}
+.nw .t{color:var(--mute);margin:.3rem 0 1rem}
 </style>
 </head>
 <body>
@@ -120,12 +135,14 @@ body::before{content:"";position:fixed;top:0;left:0;width:100%;height:100vh;heig
       <a href="#musik">Musik</a><a href="#gaming">Gaming</a><a href="#clips">Clips</a></div></div>
     <div class="dd"><button onclick="go('vrchat')">VRChat</button><div class="menu">
       <a href="#gruppen">Gruppen</a><a href="#welten">Welten</a></div></div>
+    <a href="#news">News</a>
     <a href="#socials">Socials</a>
     <a href="https://www.getshirts.de/index.php?page=shop&amp;id=einfach_nyla" target="_blank" rel="noopener noreferrer" referrerpolicy="no-referrer">Merch</a>
     <a href="#setup">Setup</a>
     <a href="#about">Über Nyla</a>
   </nav>
 </header>
+<div id="ticker" aria-live="polite"></div>
 <main>
 
 <section class="page" id="home">
@@ -146,12 +163,16 @@ body::before{content:"";position:fixed;top:0;left:0;width:100%;height:100vh;heig
       <h2>Über Nyla</h2>
       <div class="card"><h3 style="margin-bottom:1rem">Hey, ich bin Nyla!</h3><a class="btn" href="#about">Mehr über Nyla</a></div>
     </div>
-    <div class="plan-col">
+    <div class="news-col">
+      <h2>Neueste Info</h2>
+      <div class="card nw" id="newsHome"><p class="t">Noch keine News.</p></div>
+    </div>
+  </div>
+  <div class="plan-col">
       <div id="streamPlan" class="stream-plan" aria-label="Streamplan für die aktuelle Kalenderwoche">
         <p class="stream-plan-loading">Streamplan wird geladen …</p>
       </div>
     </div>
-  </div>
 </section>
 
 <section class="page" id="musik">
@@ -223,6 +244,12 @@ body::before{content:"";position:fixed;top:0;left:0;width:100%;height:100vh;heig
     <a class="soc" href="https://www.amazon.de/hz/wishlist/ls/V5QP385OWQRG?ref_=wl_share" target="_blank" rel="noopener"><span class="ic" style="color:#ff2d7a"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></span><span class="nm">MetY</span><span class="sb">Amazon-Wunschliste</span></a>
     <a class="soc" href="https://www.amazon.de/hz/wishlist/ls/TJV131MEK6CW?ref_=wl_share" target="_blank" rel="noopener"><span class="ic" style="color:#ff2d7a"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></span><span class="nm">Ma'irra</span><span class="sb">Amazon-Wunschliste</span></a>
   </div>
+</section>
+
+<section class="page" id="news">
+  <p class="crumb">News</p>
+  <h2>News</h2>
+  <div id="newsList"><p>News werden geladen ...</p></div>
 </section>
 
 <section class="page" id="setup">
@@ -333,6 +360,49 @@ async function loadStreamPlan(){
   }
 }
 loadStreamPlan();
+
+const NEWS_DAYS=14;
+const okUrl=u=>/^https?:\/\//i.test(u||'');
+const okImg=u=>/^(https:\/\/|images\/)/i.test(u||'')&&!String(u).includes('..');
+const fmtD=d=>{const x=new Date(d);return isNaN(x)?d:x.toLocaleDateString('de-DE')};
+function el(tag,cls,txt){const e=document.createElement(tag);if(cls)e.className=cls;if(txt!=null)e.textContent=txt;return e}
+async function loadNews(){
+  const tick=document.getElementById('ticker'),home=document.getElementById('newsHome'),list=document.getElementById('newsList');
+  try{
+    const r=await fetch('data/news.json',{cache:'no-store'});
+    if(!r.ok) throw new Error('keine news.json');
+    const items=((await r.json()).items||[]).slice().sort((a,b)=>String(b.date).localeCompare(String(a.date)));
+    // Ticker: neueste Beiträge der letzten NEWS_DAYS Tage, große zuerst, maximal 3
+    const rank={large:0,medium:1,small:2},now=Date.now();
+    const tk=items.filter(i=>rank[i.size]!==undefined&&now-new Date(i.date)<NEWS_DAYS*864e5)
+      .sort((a,b)=>rank[a.size]-rank[b.size]).slice(0,3);
+    tick.replaceChildren(...tk.map(i=>{
+      const a=el('a','tk '+i.size);a.href='#news';
+      a.append(el('span','d',fmtD(i.date)),el('b',null,i.title));
+      if(i.size!=='small'){const t=el('span','t',i.text);a.append(i.size==='large'?el('br'):'',t)}
+      return a;
+    }));
+    // Startseite: neueste Info
+    if(items[0]){
+      const i=items[0],t=i.text.length>180?i.text.slice(0,180).trimEnd()+' …':i.text;
+      home.replaceChildren(el('div','tag',fmtD(i.date)),el('h3',null,i.title),el('p','t',t));
+      const b=el('a','btn alt','Alle News');b.href='#news';home.append(b);
+    }
+    // News-Reiter
+    list.replaceChildren();
+    if(!items.length) list.append(el('p',null,'Noch keine News.'));
+    for(const i of items){
+      const c=el('div','card ni');
+      c.append(el('div','tag',fmtD(i.date)),el('h3',null,i.title),el('p','t',i.text));
+      if(okImg(i.image)){const im=el('img');im.src=i.image;im.alt='';im.loading='lazy';c.append(im)}
+      if(okUrl(i.link)){const a=el('a','btn',i.link_label||'Mehr Infos');a.href=i.link;a.target='_blank';a.rel='noopener';c.append(a)}
+      list.append(c);
+    }
+  }catch(e){
+    list.replaceChildren(el('p',null,'News konnten nicht geladen werden.'));
+  }
+}
+loadNews();
 
 </script>
 </body>
