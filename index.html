@@ -300,7 +300,7 @@ async function loadClips(){
   clipsLoaded=true;
   const st=document.getElementById('clipStatus'),grid=document.getElementById('clipGrid');
   try{
-    const res=await fetch(CLIPS_URL);
+    const res=await fetch(CLIPS_URL+'?t='+Date.now(),{cache:'no-store'});
     const data=await res.json();
     const sorted=data.data.sort((a,b)=>new Date(b.created_at)-new Date(a.created_at));
     st.style.display='none';grid.innerHTML='';
