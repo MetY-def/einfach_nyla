@@ -1,4 +1,18 @@
 {
-  "updated": "2026-10-19T13:35:50",
-  "items": []
+  "updated": "2026-10-20T09:43:44",
+  "items": [
+    {
+      "id": "a0db6f1c",
+      "title": "Anpassung der Streamzeiten",
+      "text": "Hallo Mümmlis!\n\nDer Streamplan hat sich leicht geändert.\n\nAb sofort wird von 16:00 - 20:00 Uhr gestreamt, das bedeutet die Streams werden sich um eine Stunde verkürzen.\n\nZudem kommt der Sponntag (Sonntags 15:00 - 18:00 Uhr) zurück, allerdings unter vorbehalt.\n\nDen aktualisierten Streamplan findet ihr wie gewohnt im Channel https://discord.com/channels/1479466581812838440/1479474911562043452\nSchaut dort gerne jederzeit rein um die geänderten Zeiten im Blick zu haben.",
+      "link": "",
+      "link_label": "",
+      "image": "images/news/a0db6f1c-schedule_output.png",
+      "date": "2026-10-20",
+      "size": "medium",
+      "category": "",
+      "pinned": true,
+      "pin_label": "Terminänderung"
+    }
+  ]
 }
