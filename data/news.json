@@ -1,6 +1,19 @@
 {
-  "updated": "2026-10-20T09:43:44",
+  "updated": "2026-10-20T23:54:31",
   "items": [
+    {
+      "id": "3deef3e5",
+      "title": "Neue Welt veröffentlicht",
+      "text": "Hallo Mümmlis!\n\nEine neue Welt ist geplant, gebaut und veröffentlicht worden.\n\nDas Körbchen kann nun besichtigt oder bewohnt werden und bietet neben einem riesigen Spiegel, auch die Möglichkeit Kaffee zu kochen.\n\nDie gemütliche Beleuchtung lädt zum verweilen ein und wenn dein Interesse geweckt ist, schau dringend in https://discord.com/channels/1479466581812838440/1480039265424511016 vorbei und Besuche das Körbchen.",
+      "link": "",
+      "link_label": "",
+      "image": "images/news/3deef3e5-Unbenannt.png",
+      "date": "2026-10-20",
+      "size": "medium",
+      "category": "vrchat",
+      "pinned": false,
+      "pin_label": "Wichtig"
+    },
     {
       "id": "a0db6f1c",
       "title": "Anpassung der Streamzeiten",
