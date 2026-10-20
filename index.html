@@ -327,6 +327,7 @@ function render(){
   document.querySelectorAll('.page').forEach(p=>p.classList.toggle('show',p.id===id));
   document.querySelectorAll('nav a').forEach(a=>a.classList.toggle('active',a.getAttribute('href')==='#'+(h==='socials'?'socials':id)));
   document.querySelector('main').classList.toggle('wide',id==='setup');
+  document.getElementById('ticker').style.display=(id==='home'||id==='infos')?'none':'';
   window.scrollTo(0,0);
   if(id==='gaming'&&!clipsLoaded)loadClips();
   if(alias[h]){const t=document.getElementById(h);if(t)t.scrollIntoView({behavior:'smooth'})}
