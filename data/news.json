@@ -1,6 +1,19 @@
 {
-  "updated": "2026-10-20T23:54:31",
+  "updated": "2026-10-22T16:33:48",
   "items": [
+    {
+      "id": "2aa7bce9",
+      "title": "Sound Probleme",
+      "text": "Hallu Mümmlis,\n\nwie ihr wisst ist Windows mit der Größte Virus den man sich freiwillig auf seiner Festplatte installieren kann.\n\nHeute kam es aus keinem Erkennbaren Grund dazu, dass mein Mikrofon nicht mehr erkannt wird und ich deswegen nicht mehr so lautstark über OBS zu hören bin.\n\nIch habe jetzt lange versucht, den Fehler zu beheben und finde die Ursache leider nicht, darum wird der No Man's Sky Stream ausfallen.\n\nIch Danke euch für euer Verständnis und würde dann später einfach eine Spontanität einwerfen und ein kleines Set für euch spielen.",
+      "link": "",
+      "link_label": "",
+      "image": "images/news/2aa7bce9-sound.PNG",
+      "date": "2026-10-22",
+      "size": "large",
+      "category": "gaming",
+      "pinned": true,
+      "pin_label": "Ausfall"
+    },
     {
       "id": "3deef3e5",
       "title": "Neue Welt veröffentlicht",
