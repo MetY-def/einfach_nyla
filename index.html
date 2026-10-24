@@ -457,9 +457,8 @@ async function loadNews(){
   try{
     const r=await fetch('data/news.json',{cache:'no-store'});
     if(!r.ok) throw new Error('keine news.json');
-    // neueste zuerst; angeheftete Meldungen bleiben oben
-    const items=((await r.json()).items||[]).slice().sort((a,b)=>String(b.date).localeCompare(String(a.date)))
-      .sort((a,b)=>(b.pinned?1:0)-(a.pinned?1:0));
+    // strikt neueste zuerst (angeheftete bleiben farbig markiert)
+    const items=((await r.json()).items||[]).slice().sort((a,b)=>String(b.date).localeCompare(String(a.date))||((b.pinned?1:0)-(a.pinned?1:0)));
     // Startseite: neueste Info (nach Datum)
     const newest=items.slice().sort((a,b)=>String(b.date).localeCompare(String(a.date)))[0];
     if(newest){
