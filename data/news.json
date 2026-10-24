@@ -1,6 +1,19 @@
 {
-  "updated": "2026-10-22T16:33:48",
+  "updated": "2026-10-24T12:35:45",
   "items": [
+    {
+      "id": "abfe0d30",
+      "title": "Spontanität",
+      "text": "Hallu Mümmlis,\n\nheute ist doch ein großartiger Tag für eine kleine Spontanität, findet ihr nicht auch?\n\nStart: 15:00 Uhr\nEnde: 16:00 Uhr +-\n\nWer dabei sein, Kaffee und Kuchen naschen mag oder ein wenig Tanzen möchte, sollte unbedingt joinen.",
+      "link": "",
+      "link_label": "",
+      "image": "images/news/abfe0d30-welt-astera.webp",
+      "date": "2026-10-24",
+      "size": "large",
+      "category": "musik",
+      "pinned": false,
+      "pin_label": "Wichtig"
+    },
     {
       "id": "2aa7bce9",
       "title": "Sound Probleme",
