@@ -174,6 +174,12 @@ body::before{content:"";position:fixed;top:0;left:0;width:100%;height:100vh;heig
 .bh.vr .bhimg{width:40%;max-width:380px;object-position:center top;-webkit-mask-image:linear-gradient(to left,#000 62%,transparent);mask-image:linear-gradient(to left,#000 62%,transparent)}
 @media(max-width:700px){.bh.vr .bht{padding:1.6rem 1.2rem 0}.bh.vr .bhimg{width:100%;max-width:none;height:300px;-webkit-mask-image:linear-gradient(to top,#000 62%,transparent);mask-image:linear-gradient(to top,#000 62%,transparent)}}
 .bh.vr .vrsub{font-size:.95rem;margin:.4rem 0 0;color:var(--mute)}
+.yt{display:grid;grid-template-columns:minmax(0,1fr) 270px;gap:1rem;margin-top:1rem}
+.yt .card{display:flex;flex-direction:column;gap:.7rem}
+.yt iframe{width:100%;border:0;border-radius:10px;background:#000}
+.yt .vd iframe{aspect-ratio:16/9}.yt .sh iframe{aspect-ratio:9/16}
+.yt .btn{margin-top:auto;align-self:flex-start}
+@media(max-width:760px){.yt{grid-template-columns:1fr}.yt .sh iframe{max-width:270px;margin:0 auto}}
 </style>
 </head>
 <body>
@@ -261,6 +267,10 @@ body::before{content:"";position:fixed;top:0;left:0;width:100%;height:100vh;heig
     <div class="card"><span class="tag">Regelmäßig</span><h3>Gaming</h3><p class="when"><span>Donnerstag</span>16:00 - 21:00 Uhr</p></div>
   </div>
   <div class="row"><a class="btn" href="#clips">Zu den Clips</a><a class="btn" href="https://twitch.tv/einfach_nyla" target="_blank" rel="noopener">einfach_nyla auf Twitch</a></div>
+  <div class="yt">
+    <div class="card vd"><span class="tag">Neue Videos</span><iframe src="https://www.youtube-nocookie.com/embed/videoseries?list=UULFLgxtNxTCaDegJPW9U_cwjQ" title="Neue YouTube-Videos" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe><a class="btn" href="https://www.youtube.com/channel/UCLgxtNxTCaDegJPW9U_cwjQ/videos" target="_blank" rel="noopener">Alle Videos auf YouTube</a></div>
+    <div class="card sh"><span class="tag">Neueste Shorts</span><iframe src="https://www.youtube-nocookie.com/embed/videoseries?list=UUSHLgxtNxTCaDegJPW9U_cwjQ" title="Neueste YouTube-Shorts" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe><a class="btn" href="https://www.youtube.com/channel/UCLgxtNxTCaDegJPW9U_cwjQ/shorts" target="_blank" rel="noopener">Alle Shorts</a></div>
+  </div>
   <div class="sec" id="clips" style="margin-top:3rem">
   <h2>Clips</h2>
   <p>Die besten Momente aus dem Stream.</p>
