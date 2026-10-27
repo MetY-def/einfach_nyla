@@ -1,5 +1,41 @@
 {
-  "week": 0,
-  "month": "Wird beim Workflow-Lauf aktualisiert",
-  "rows": []
+  "week": 44,
+  "month": "Oktober 2026",
+  "rows": [
+    {
+      "day": "MO",
+      "time": "",
+      "name": "Keine Termine"
+    },
+    {
+      "day": "DI",
+      "time": "",
+      "name": "Keine Termine"
+    },
+    {
+      "day": "MI",
+      "time": "",
+      "name": "Keine Termine"
+    },
+    {
+      "day": "DO",
+      "time": "",
+      "name": "Keine Termine"
+    },
+    {
+      "day": "FR",
+      "time": "",
+      "name": "Keine Termine"
+    },
+    {
+      "day": "SA",
+      "time": "",
+      "name": "Streamfrei"
+    },
+    {
+      "day": "SO",
+      "time": "",
+      "name": "Keine Termine"
+    }
+  ]
 }
