@@ -1,11 +1,21 @@
 {
-  "week": 42,
+  "week": 44,
   "month": "Oktober 2026",
   "rows": [
     {
       "day": "MO",
-      "time": "16:00 – 21:00",
-      "name": "Schedule I"
+      "time": "19:30 – 22:00",
+      "name": "Metro 2033"
+    },
+    {
+      "day": "DI",
+      "time": "20:00 – 21:00",
+      "name": "Dance Dienstag"
+    },
+    {
+      "day": "DI",
+      "time": "20:00 – 22:00",
+      "name": "Dance Dienstag"
     },
     {
       "day": "DI",
@@ -14,13 +24,18 @@
     },
     {
       "day": "MI",
-      "time": "16:00 – 21:00",
-      "name": "Schedule I"
+      "time": "",
+      "name": "Keine Termine"
     },
     {
       "day": "DO",
-      "time": "16:00 – 21:00",
-      "name": "No Man's Sky"
+      "time": "",
+      "name": "Keine Termine"
+    },
+    {
+      "day": "FR",
+      "time": "20:00 – 21:00",
+      "name": "Rock the Bar"
     },
     {
       "day": "FR",
@@ -29,13 +44,28 @@
     },
     {
       "day": "SA",
-      "time": "",
-      "name": "Streamfrei"
+      "time": "00:00 – 00:00",
+      "name": "STREAMFREI"
+    },
+    {
+      "day": "SA",
+      "time": "00:00 – 00:00",
+      "name": "FREI"
     },
     {
       "day": "SO",
       "time": "11:00 – 12:00",
-      "name": "Morning Groove Sunday"
+      "name": "Morning Grove Sunday"
+    },
+    {
+      "day": "SO",
+      "time": "11:00 – 12:00",
+      "name": "Morning Grooves Sunday"
+    },
+    {
+      "day": "SO",
+      "time": "15:00 – 19:00",
+      "name": "Sponntag"
     }
   ]
 }
