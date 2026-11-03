@@ -190,12 +190,8 @@ body::before{content:"";position:fixed;top:0;left:0;width:100%;height:100vh;heig
 .ev li.always::before{background:var(--cyan);box-shadow:0 0 8px var(--cyan)}
 .ev li.off{opacity:.5}.ev li.off::before{background:#8a7aa8;box-shadow:none}
 .ev li b{display:block;font-size:.95rem}.ev li span{font-size:.8rem;color:var(--mute)}
-.pl iframe{display:block;width:100%;aspect-ratio:16/9;border:0;border-radius:10px;background:#000;margin:.7rem 0}
 .pl p{margin:0 0 .8rem;color:var(--mute);font-size:.9rem}
 @media(max-width:800px){.mp{grid-template-columns:1fr}}
-.pt{display:flex;gap:.5rem;margin-bottom:.8rem}
-.pb{font-family:Orbitron,sans-serif;font-size:.65rem;letter-spacing:.1em;text-transform:uppercase;padding:.45rem .9rem;border-radius:20px;border:1px solid var(--line);background:transparent;color:var(--mute);cursor:pointer}
-.pb.on{background:var(--pink);border-color:var(--pink);color:#fff}
 .evi{border:1px solid var(--line);border-radius:8px;background:#0b0314aa;overflow:hidden}
 .evg .evi+.evi{margin-top:.4rem}
 .eh{position:relative;display:block;width:100%;text-align:left;background:none;border:0;color:var(--text);cursor:pointer;padding:.5rem 4.4rem .5rem 1.6rem;font:inherit}
@@ -312,24 +308,16 @@ body::before{content:"";position:fixed;top:0;left:0;width:100%;height:100vh;heig
       </div>
     </div>
     <div class="card pl">
-      <div class="pt"><button class="pb on" type="button" data-tab="live">Live</button><button class="pb" type="button" data-tab="sets">Sets anhören</button></div>
-      <div id="plLive">
-        <iframe id="twitchPlayer" title="DJ Nyla live auf Twitch" allowfullscreen></iframe>
-        <p>Wenn ich live bin, läuft der Stream hier. Sonst siehst du den Offline-Bildschirm.</p>
-        <a class="btn" href="https://twitch.tv/dj_nyla" target="_blank" rel="noopener">Auf Twitch ansehen</a>
-      </div>
-      <div id="plSets" hidden>
-        <span class="tag" id="npEv">Sets</span>
-        <h3 id="npTitle">Wähle links ein Set</h3>
-        <p class="em" id="npMsg">Öffne links ein Event und klick auf ein Set, um es anzuhören.</p>
-        <div id="npMix"></div>
-        <div class="au" id="npAudio" hidden>
-          <button class="btn" id="auPrev" type="button" aria-label="Voriges Set">&lsaquo;</button>
-          <button class="btn" id="auPlay" type="button" aria-label="Abspielen oder pausieren">&#9654;</button>
-          <button class="btn" id="auNext" type="button" aria-label="Nächstes Set">&rsaquo;</button>
-          <input id="auSeek" type="range" min="0" max="1000" value="0" aria-label="Position">
-          <span id="auTime">0:00 / 0:00</span>
-        </div>
+      <span class="tag" id="npEv">Set-Player</span>
+      <h3 id="npTitle">Wähle links ein Set</h3>
+      <p class="em" id="npMsg">Öffne links ein Event und klick auf ein Set, um es anzuhören.</p>
+      <div id="npMix"></div>
+      <div class="au" id="npAudio" hidden>
+        <button class="btn" id="auPrev" type="button" aria-label="Voriges Set">&lsaquo;</button>
+        <button class="btn" id="auPlay" type="button" aria-label="Abspielen oder pausieren">&#9654;</button>
+        <button class="btn" id="auNext" type="button" aria-label="Nächstes Set">&rsaquo;</button>
+        <input id="auSeek" type="range" min="0" max="1000" value="0" aria-label="Position">
+        <span id="auTime">0:00 / 0:00</span>
       </div>
     </div>
   </div>
@@ -464,7 +452,6 @@ function render(){
   document.querySelectorAll('.page').forEach(p=>p.classList.toggle('show',p.id===id));
   document.querySelectorAll('nav a').forEach(a=>a.classList.toggle('active',a.getAttribute('href')==='#'+(h==='socials'?'socials':id)));
   document.querySelector('main').classList.toggle('wide',id==='setup');
-  if(id==='musik')musikInit();
   window.scrollTo(0,0);
   if(id==='gaming'&&!clipsLoaded)loadClips();
   if(alias[h]){const t=document.getElementById(h);if(t)t.scrollIntoView({behavior:'smooth'})}
@@ -491,18 +478,9 @@ function mcPath(u){
 }
 const fmtT=s=>{if(!isFinite(s))return'0:00';s=Math.floor(s);const h=Math.floor(s/3600),m=Math.floor(s%3600/60),x=String(s%60).padStart(2,'0');return(h?h+':'+String(m).padStart(2,'0'):m)+':'+x};
 const tryPlay=()=>{try{const p=au.play();if(p&&p.catch)p.catch(()=>{})}catch(e){}};
-const twitchUrl=()=>location.hostname?'https://player.twitch.tv/?channel=dj_nyla&parent='+encodeURIComponent(location.hostname)+'&autoplay=false&muted=true':'';
-function setTab(t){
-  const live=t==='live',f=$('twitchPlayer');
-  $('plLive').hidden=!live;$('plSets').hidden=live;
-  document.querySelectorAll('.pb').forEach(b=>b.classList.toggle('on',b.dataset.tab===t));
-  if(live){au.pause();const u=twitchUrl();if(u&&f.getAttribute('src')!==u)f.src=u}
-  else if(f.getAttribute('src')) f.src='about:blank';   // Live-Stream anhalten
-}
-function musikInit(){if(!$('plLive').hidden){const f=$('twitchPlayer'),u=twitchUrl();if(u&&f.getAttribute('src')!==u)f.src=u}}
 function markActive(){document.querySelectorAll('.tr').forEach(b=>b.classList.toggle('now',b._s===queue[qi]))}
 function playSet(list,k,ev){
-  queue=list;qi=k;const s=list[k];setTab('sets');
+  queue=list;qi=k;const s=list[k];
   $('npEv').textContent=ev.name;$('npTitle').textContent=s.title||ev.name;$('npMsg').textContent='';
   const mix=$('npMix'),aud=$('npAudio'),mp=mcPath(s.mixcloud);
   mix.replaceChildren();au.pause();
@@ -544,7 +522,6 @@ async function initSets(){
   }catch(e){}
   buildEvents();
 }
-document.querySelectorAll('.pb').forEach(b=>b.onclick=()=>setTab(b.dataset.tab));
 $('auPlay').onclick=()=>{au.paused?tryPlay():au.pause()};
 $('auPrev').onclick=()=>step(-1);$('auNext').onclick=()=>step(1);
 $('auSeek').oninput=()=>{if(au.duration)au.currentTime=$('auSeek').value/1000*au.duration};
