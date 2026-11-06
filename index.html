@@ -264,6 +264,29 @@ main.deco{overflow-x:visible}
 .vp:hover,.vp:focus-visible{border-color:var(--pink);box-shadow:0 0 22px #e83fcf55;transform:translateY(-2px);outline:none}
 .vp img{display:block;width:100%;height:auto}
 .vp span{position:absolute;left:0;right:0;bottom:0;padding:1.6rem .8rem .55rem;background:linear-gradient(to top,#0b0314e6,transparent);font-size:.9rem}
+/* Fotos: Magnettafel (Desktop) */
+.tafel{display:none;position:relative;left:50%;transform:translateX(-50%);width:min(96vw,1500px);margin:.6rem 0 2.4rem;container-type:inline-size}
+.tbg{display:block;width:100%;height:auto}
+.tafel>:not(.tbg){position:absolute;margin:0}
+.tchips{left:31%;top:14.6%;width:20.5%;gap:.5cqw .7cqw}
+.tchips .chip{font-family:Caveat,cursive;font-weight:600;font-size:1.95cqw;line-height:1.15;text-transform:none;letter-spacing:.02em;padding:0 .9cqw;border:.16cqw dashed #f3d9eacc;border-radius:.7cqw;color:#f6e9f1;background:transparent}
+.tchips .chip:hover,.tchips .chip.on{background:#f6e9f1;border-style:solid;border-color:#f6e9f1;color:#1c1519}
+.ttitle{left:52.2%;top:14.6%;width:31%;white-space:nowrap;font-family:Caveat,cursive;font-weight:600;font-size:3.5cqw;line-height:1.1;text-align:center;color:#f6e6f1;text-shadow:0 0 .5cqw #ffb4e6aa;transform:rotate(-1.5deg);text-decoration:underline;text-decoration-color:#f4a6d6;text-decoration-thickness:.18cqw;text-underline-offset:.55cqw}
+.ttitle::after{content:" \2665";color:#f4a6d6;display:inline-block;text-decoration:none}
+.tgrid{left:19.7%;top:28.5%;width:61%;height:43.8%;display:grid;grid-template-columns:repeat(var(--cols,5),minmax(0,1fr));gap:var(--gap,12px);align-content:start}
+.tem{grid-column:1/-1;font-family:Caveat,cursive;font-size:2.4cqw;color:#f6e9f1;margin:0}
+.tp{position:relative;display:block;width:100%;padding:6% 6% 2%;border:0;border-radius:2px;background:#fbf8f1;box-shadow:0 .5cqw 1cqw #000b;transform:rotate(var(--r,0deg));cursor:pointer;transition:transform .2s,box-shadow .2s;text-align:left}
+.tp:hover,.tp:focus-visible{transform:rotate(0) scale(1.05);z-index:3;box-shadow:0 .9cqw 1.6cqw #000d;outline:none}
+.tp:nth-child(5n+1){--r:-2deg}.tp:nth-child(5n+2){--r:1.5deg}.tp:nth-child(5n+3){--r:-1deg}.tp:nth-child(5n+4){--r:2.2deg}.tp:nth-child(5n){--r:-1.6deg}
+.tp img{display:block;width:100%;aspect-ratio:1;object-fit:cover}
+.tp span{display:block;font-family:Caveat,cursive;font-weight:600;font-size:var(--fs,16px);line-height:1.2;min-height:1.2em;text-align:center;color:#3a2a1c;padding:4% 0 2%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tp::before{content:"";position:absolute;top:-6%;left:50%;width:15%;aspect-ratio:1;margin-left:-7.5%;border-radius:50%;z-index:2;background:radial-gradient(circle at 36% 30%,#ebe8ee 0,#aaa6b0 38%,#6b6771 72%,#3e3b44);box-shadow:0 .25cqw .4cqw #000b,inset 0 -.15cqw .25cqw #0007}
+.tpager{left:35%;width:30%;top:75.4%;display:flex;justify-content:center;align-items:center;gap:2cqw;font-family:Caveat,cursive;font-weight:600;font-size:2.4cqw;color:#f6e9f1}
+.tpager button{font-family:Caveat,cursive;font-size:3cqw;line-height:1;width:3.6cqw;height:3.6cqw;border-radius:50%;border:.18cqw dashed #f3d9eacc;background:transparent;color:#f6e9f1;cursor:pointer;padding:0}
+.tpager button:hover:not(:disabled){background:#f6e9f1;color:#1c1519}
+.tpager button:disabled{opacity:.3;cursor:default}
+.tpager[hidden]{display:none}
+@media(min-width:900px){.tafel{display:block}#fotos .frame,#decor{display:none}}
 </style>
 </head>
 <body>
@@ -428,6 +451,13 @@ main.deco{overflow-x:visible}
 
 <section class="page" id="fotos">
   <p class="crumb">Content / Fotos</p>
+  <div class="tafel">
+    <img class="tbg" src="images/fotos-tafel.webp" alt="" loading="lazy">
+    <div class="pf tchips" id="tAlbums"></div>
+    <h2 class="ttitle">Nyla's Fotografie</h2>
+    <div class="tgrid" id="tGrid"></div>
+    <div class="tpager" id="tPager" hidden><button id="tPrev" type="button" aria-label="Vorherige Seite">&lsaquo;</button><span id="tNum"></span><button id="tNext" type="button" aria-label="Nächste Seite">&rsaquo;</button></div>
+  </div>
   <div class="frame">
     <div class="slate">
       <div class="shead">
@@ -608,17 +638,48 @@ initSets();
 /* ---- Fotos: Galerie mit Alben und Großansicht ---- */
 let PH=[],phAlbum='',phList=[],phI=-1,lbList=[],vpList=[];
 function phChips(){
-  const box=$('phAlbums');box.replaceChildren();
   const names=[...new Set(PH.map(p=>p.album).filter(Boolean))];
-  if(!names.length) return;
-  [['','Alle'],...names.map(n=>[n,n])].forEach(([v,t])=>{
-    const c=el('button','chip'+(phAlbum===v?' on':''),t);c.type='button';
-    c.onclick=()=>{phAlbum=v;phChips();phRender()};box.append(c);
-  });
+  for(const id of['phAlbums','tAlbums']){
+    const box=$(id);box.replaceChildren();
+    if(!names.length) continue;
+    [['','Alle'],...names.map(n=>[n,n])].forEach(([v,t])=>{
+      const c=el('button','chip'+(phAlbum===v?' on':''),t);c.type='button';
+      c.onclick=()=>{phAlbum=v;tPage=0;phChips();phRender()};box.append(c);
+    });
+  }
 }
+let tPage=0;
+function tRender(){
+  const g=$('tGrid');if(!g||!g.clientWidth)return;
+  const W=g.clientWidth,H=g.clientHeight,gap=Math.max(8,Math.round(W*.016));
+  // so große Fotos wie möglich, aber mindestens 8 pro Seite (sonst die Aufteilung mit den meisten Fotos)
+  let best=null;
+  for(let c=3;c<=9;c++){
+    const w=(W-gap*(c-1))/c,r=Math.max(1,Math.floor((H+gap)/(w*1.2+gap))),o={cols:c,cw:w,per:c*r};
+    if(w<86)break;
+    if(!best||(best.per<8&&o.per>best.per)){best=o}
+    if(best.per>=8)break;
+  }
+  const cols=best.cols,cw=best.cw,per=best.per;
+  const pages=Math.max(1,Math.ceil(phList.length/per));tPage=Math.min(tPage,pages-1);
+  g.style.setProperty('--cols',cols);g.style.setProperty('--gap',gap+'px');g.style.setProperty('--fs',Math.max(12,Math.round(cw*.13))+'px');
+  g.replaceChildren();
+  if(!phList.length) g.append(el('p','tem',PH.length?'Keine Fotos in diesem Album.':'Noch keine Fotos.'));
+  phList.slice(tPage*per,(tPage+1)*per).forEach((p,k)=>{
+    const i=tPage*per+k,b=el('button','tp');b.type='button';b.setAttribute('aria-label',p.title||'Foto öffnen');
+    const im=el('img');im.src=p.thumb;im.alt=p.title||'';im.loading='lazy';
+    b.append(im,el('span',null,p.title||''));b.onclick=()=>{lbList=phList;phOpen(i)};g.append(b);
+  });
+  $('tPager').hidden=pages<2;$('tNum').textContent=(tPage+1)+' / '+pages;
+  $('tPrev').disabled=tPage===0;$('tNext').disabled=tPage>=pages-1;
+}
+$('tPrev').onclick=()=>{tPage--;tRender()};$('tNext').onclick=()=>{tPage++;tRender()};
+(function(){let t;const later=()=>{clearTimeout(t);t=setTimeout(tRender,60)};addEventListener('resize',later);
+  if(window.ResizeObserver)new ResizeObserver(later).observe($('tGrid'))})();
 function phRender(){
   const g=$('phGrid');g.replaceChildren();
   phList=PH.filter(p=>!phAlbum||p.album===phAlbum);
+  tRender();
   if(!phList.length){g.append(el('p',null,PH.length?'Keine Fotos in diesem Album.':'Noch keine Fotos.'));return}
   phList.forEach((p,i)=>{
     const b=el('button','ph');b.type='button';b.setAttribute('aria-label',p.title||'Foto öffnen');
