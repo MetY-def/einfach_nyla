@@ -286,7 +286,12 @@ main.deco{overflow-x:visible}
 .tpager button:hover:not(:disabled){background:#f6e9f1;color:#1c1519}
 .tpager button:disabled{opacity:.3;cursor:default}
 .tpager[hidden]{display:none}
-@media(min-width:900px){.tafel{display:block}#fotos .frame,#decor{display:none}}
+@media(min-width:900px){
+  .tafel{display:block;width:100vw;max-width:2000px;margin:0}
+  #fotos .frame,#decor{display:none}
+  #fotos>.crumb{display:none}
+  main.deco{padding-top:0;padding-bottom:0}
+}
 </style>
 </head>
 <body>
