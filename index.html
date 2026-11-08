@@ -258,12 +258,6 @@ body{overflow-x:clip}
 main.deco{overflow-x:visible}
 .frame{margin-top:6.4rem}
 @media(max-width:700px){.frame{margin:5.2rem 1.4rem 2.4rem;padding:12px}.slate{padding:1rem 1.1rem .8rem 1.9rem}.shead h2{margin-left:0}}
-.vg{columns:3 260px;column-gap:1rem;margin-top:1rem}
-.vg>p{margin:0}
-.vp{position:relative;display:block;width:100%;margin:0 0 1rem;padding:0;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--panel);cursor:pointer;break-inside:avoid;color:var(--text);text-align:left;transition:.2s}
-.vp:hover,.vp:focus-visible{border-color:var(--pink);box-shadow:0 0 22px #e83fcf55;transform:translateY(-2px);outline:none}
-.vp img{display:block;width:100%;height:auto}
-.vp span{position:absolute;left:0;right:0;bottom:0;padding:1.6rem .8rem .55rem;background:linear-gradient(to top,#0b0314e6,transparent);font-size:.9rem}
 /* Fotos: Magnettafel (Desktop) */
 .tafel{display:none;position:relative;left:50%;transform:translateX(-50%);width:min(96vw,1500px);margin:.6rem 0 2.4rem;container-type:inline-size}
 .tbg{display:block;width:100%;height:auto}
@@ -292,6 +286,21 @@ main.deco{overflow-x:visible}
   #fotos>.crumb{display:none}
   main.deco{padding-top:0;padding-bottom:0}
 }
+/* VRChat-Bilder: Fotoleine mit Wäscheklammern */
+.vg{margin-top:1.4rem}.vg>p{margin:0}
+.ln{position:relative;padding-top:16px;margin:0 0 1.6rem}
+.ln::before,.ln::after{content:"";position:absolute;top:17px;width:11px;height:11px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#9a9aa3,#3a3a42);box-shadow:0 1px 3px #000b;z-index:3}
+.ln::before{left:-5px}.ln::after{right:-5px}
+.rope{position:absolute;left:0;top:16px;width:100%;height:40px;overflow:visible;z-index:0;pointer-events:none}
+.rope path{fill:none;stroke:#cdaa70;stroke-width:3.2;stroke-linecap:round;vector-effect:non-scaling-stroke;filter:drop-shadow(0 3px 2px #0009)}
+.rope path.tw{stroke:#7b5c2e;stroke-width:3.2;stroke-dasharray:2 7;filter:none}
+.lr{position:relative;z-index:1;display:grid;gap:1.1rem}
+.pl16{position:relative;display:block;width:100%;margin-top:calc(var(--y,12px) - 4px);padding:.6rem .6rem .25rem;border:0;border-radius:3px;background:#fbf8f1;box-shadow:0 .7rem 1.3rem #000b;transform-origin:50% 0;transform:rotate(var(--r,0deg));cursor:pointer;text-align:left;transition:transform .25s,box-shadow .25s}
+.pl16:hover,.pl16:focus-visible{transform:rotate(0) scale(1.03);z-index:5;box-shadow:0 1rem 1.8rem #000d;outline:none}
+.pl16 img{display:block;width:100%;aspect-ratio:16/9;object-fit:cover}
+.pl16 span{display:block;font-family:Caveat,cursive;font-weight:600;font-size:1.3rem;line-height:1.2;min-height:1.4em;text-align:center;color:#3a2a1c;padding:.35rem 0 .15rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pl16::before{content:"";position:absolute;top:-17px;left:50%;width:15px;height:36px;margin-left:-7.5px;border-radius:3px 3px 6px 6px;z-index:3;background:linear-gradient(90deg,#ecc895,#c8995c 42%,#a4723a 58%,#dcb47c);box-shadow:0 2px 4px #000a}
+.pl16::after{content:"";position:absolute;top:-3px;left:50%;width:15px;height:6px;margin-left:-7.5px;border-radius:2px;z-index:4;background:linear-gradient(#d4d4db,#7a7a84)}
 </style>
 </head>
 <body>
@@ -641,9 +650,9 @@ au.onerror=()=>{$('npMsg').textContent='Diese Datei konnte nicht geladen werden.
 initSets();
 
 /* ---- Fotos: Galerie mit Alben und Großansicht ---- */
-let PH=[],phAlbum='',phList=[],phI=-1,lbList=[],vpList=[];
+let PH=[],FOTOS=[],BILDER=[],phAlbum='',phList=[],phI=-1,lbList=[],vpList=[];
 function phChips(){
-  const names=[...new Set(PH.map(p=>p.album).filter(Boolean))];
+  const names=[...new Set(FOTOS.map(p=>p.album).filter(Boolean))];
   for(const id of['phAlbums','tAlbums']){
     const box=$(id);box.replaceChildren();
     if(!names.length) continue;
@@ -669,7 +678,7 @@ function tRender(){
   const pages=Math.max(1,Math.ceil(phList.length/per));tPage=Math.min(tPage,pages-1);
   g.style.setProperty('--cols',cols);g.style.setProperty('--gap',gap+'px');g.style.setProperty('--fs',Math.max(12,Math.round(cw*.13))+'px');
   g.replaceChildren();
-  if(!phList.length) g.append(el('p','tem',PH.length?'Keine Fotos in diesem Album.':'Noch keine Fotos.'));
+  if(!phList.length) g.append(el('p','tem',FOTOS.length?'Keine Fotos in diesem Album.':'Noch keine Fotos.'));
   phList.slice(tPage*per,(tPage+1)*per).forEach((p,k)=>{
     const i=tPage*per+k,b=el('button','tp');b.type='button';b.setAttribute('aria-label',p.title||'Foto öffnen');
     const im=el('img');im.src=p.thumb;im.alt=p.title||'';im.loading='lazy';
@@ -683,9 +692,9 @@ $('tPrev').onclick=()=>{tPage--;tRender()};$('tNext').onclick=()=>{tPage++;tRend
   if(window.ResizeObserver)new ResizeObserver(later).observe($('tGrid'))})();
 function phRender(){
   const g=$('phGrid');g.replaceChildren();
-  phList=PH.filter(p=>!phAlbum||p.album===phAlbum);
+  phList=FOTOS.filter(p=>!phAlbum||p.album===phAlbum);
   tRender();
-  if(!phList.length){g.append(el('p',null,PH.length?'Keine Fotos in diesem Album.':'Noch keine Fotos.'));return}
+  if(!phList.length){g.append(el('p',null,FOTOS.length?'Keine Fotos in diesem Album.':'Noch keine Fotos.'));return}
   phList.forEach((p,i)=>{
     const b=el('button','ph');b.type='button';b.setAttribute('aria-label',p.title||'Foto öffnen');
     const im=el('img');im.src=p.thumb;im.alt=p.title||'';im.loading='lazy';
@@ -701,19 +710,31 @@ function phOpen(i){
   $('lbCap').textContent=[p.title,p.album,p.date?fmtD(p.date):''].filter(Boolean).join(' · ');
   $('lb').hidden=false;document.body.style.overflow='hidden';
 }
-function vpRender(){
-  const g=$('vpGrid');g.replaceChildren();
-  vpList=PH.filter(p=>String(p.album||'').toLowerCase()==='vrchat');
+let vpN=0;
+function vpRender(force){
+  const g=$('vpGrid');if(!g)return;
+  vpList=BILDER;
+  const w=g.clientWidth||1000,n=w>=900?3:w>=580?2:1;
+  if(!force&&n===vpN&&g.dataset.n===String(vpList.length))return;
+  vpN=n;g.dataset.n=String(vpList.length);g.replaceChildren();
   if(!vpList.length){g.append(el('p',null,'Noch keine Bilder.'));return}
-  vpList.forEach((p,i)=>{
-    const b=el('button','vp');b.type='button';b.setAttribute('aria-label',p.title||'Bild öffnen');
-    const im=el('img');im.src=p.thumb;im.alt=p.title||'';im.loading='lazy';if(p.w&&p.h){im.width=p.w;im.height=p.h}
-    b.append(im);
-    const cap=[p.title,p.date?fmtD(p.date):''].filter(Boolean).join(' · ');
-    if(cap) b.append(el('span',null,cap));
-    b.onclick=()=>{lbList=vpList;phOpen(i)};g.append(b);
-  });
+  const ROT=[-2,1.4,-1,2.1,-1.6];
+  for(let r=0;r<vpList.length;r+=n){
+    const ln=el('div','ln');
+    ln.insertAdjacentHTML('beforeend','<svg class="rope" viewBox="0 0 100 40" preserveAspectRatio="none" aria-hidden="true"><path d="M0 6Q50 30 100 6"/><path class="tw" d="M0 6Q50 30 100 6"/></svg>');
+    const row=el('div','lr');row.style.gridTemplateColumns='repeat('+n+',minmax(0,1fr))';
+    vpList.slice(r,r+n).forEach((p,c)=>{
+      const i=r+c,t=(c+.5)/n,b=el('button','pl16');b.type='button';b.setAttribute('aria-label',p.title||'Bild öffnen');
+      b.style.setProperty('--y',(6+48*t*(1-t)).toFixed(1)+'px');b.style.setProperty('--r',ROT[i%5]+'deg');
+      const im=el('img');im.src=p.thumb;im.alt=p.title||'';im.loading='lazy';
+      b.append(im,el('span',null,[p.title,p.date?fmtD(p.date):''].filter(Boolean).join(' · ')));
+      b.onclick=()=>{lbList=vpList;phOpen(i)};row.append(b);
+    });
+    ln.append(row);g.append(ln);
+  }
 }
+(function(){let t;const later=()=>{clearTimeout(t);t=setTimeout(()=>vpRender(),80)};addEventListener('resize',later);
+  if(window.ResizeObserver)new ResizeObserver(later).observe($('vpGrid'))})();
 function phClose(){$('lb').hidden=true;$('lbImg').removeAttribute('src');document.body.style.overflow=''}
 $('lbX').onclick=phClose;$('lbP').onclick=()=>phOpen(phI-1);$('lbN').onclick=()=>phOpen(phI+1);
 $('lb').addEventListener('click',e=>{if(e.target.id==='lb')phClose()});
@@ -727,7 +748,8 @@ async function loadPhotos(){
     if(!r.ok) throw new Error('keine photos.json');
     PH=((await r.json()).photos||[]).filter(p=>okImg(p.thumb)&&okImg(p.image))
       .sort((a,b)=>String(b.date||'').localeCompare(String(a.date||'')));
-    phChips();phRender();vpRender();
+    FOTOS=PH.filter(p=>p.section!=='bilder');BILDER=PH.filter(p=>p.section==='bilder');
+    phChips();phRender();vpRender(true);
   }catch(e){$('vpGrid').replaceChildren(el('p',null,'Bilder konnten nicht geladen werden.'));$('phGrid').replaceChildren(el('p',null,'Fotos konnten nicht geladen werden.'))}
 }
 loadPhotos();
