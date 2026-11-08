@@ -1,4 +1,16 @@
 {
-  "updated": "2026-11-08T09:24:28",
-  "photos": []
+  "updated": "2026-11-08T09:24:57",
+  "photos": [
+    {
+      "id": "261108-ffbe2c",
+      "title": "",
+      "album": "",
+      "date": "2026-10-03",
+      "thumb": "images/fotos/261108-ffbe2c-t.webp",
+      "image": "images/fotos/261108-ffbe2c.webp",
+      "w": 292,
+      "h": 520,
+      "section": "bilder"
+    }
+  ]
 }
