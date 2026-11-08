@@ -1,6 +1,19 @@
 {
-  "updated": "2026-11-08T09:43:12",
+  "updated": "2026-11-08T09:44:42",
   "items": [
+    {
+      "id": "2036eb67",
+      "title": "Bilder und Fotos",
+      "text": "Ab sofort können auf der Webseite Bilder rund um VRChat, aber auch irl Fotos von Nyla gefunden und angesehen werden.\n\nhttps://mety-def.github.io/einfach_nyla/#fotos\n\nhttps://mety-def.github.io/einfach_nyla/#vrchat-bilder",
+      "link": "",
+      "link_label": "",
+      "image": "",
+      "date": "2026-11-08",
+      "size": "small",
+      "category": "vrchat",
+      "pinned": false,
+      "pin_label": "Wichtig"
+    },
     {
       "id": "0da02b84",
       "title": "Umzug",
