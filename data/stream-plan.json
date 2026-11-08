@@ -1,41 +1,41 @@
 {
-  "week": 45,
+  "week": 46,
   "month": "November 2026",
   "rows": [
     {
       "day": "MO",
       "time": "",
-      "name": "Streamfrei"
+      "name": "Keine Termine"
     },
     {
       "day": "DI",
       "time": "",
-      "name": "Streamfrei"
+      "name": "Keine Termine"
     },
     {
       "day": "MI",
       "time": "",
-      "name": "Streamfrei"
+      "name": "Keine Termine"
     },
     {
       "day": "DO",
       "time": "",
-      "name": "Streamfrei"
+      "name": "Keine Termine"
     },
     {
       "day": "FR",
       "time": "",
-      "name": "Streamfrei"
+      "name": "Keine Termine"
     },
     {
       "day": "SA",
       "time": "",
-      "name": "Streamfrei"
+      "name": "Keine Termine"
     },
     {
       "day": "SO",
       "time": "",
-      "name": "Streamfrei"
+      "name": "Keine Termine"
     }
   ]
 }
