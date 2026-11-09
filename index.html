@@ -289,23 +289,27 @@ main.deco{overflow-x:visible}
 /* VRChat-Bilder: Fotoleine mit Wäscheklammern */
 .vg{margin-top:1.4rem}.vg>p{margin:0}
 .ln{position:relative;padding-top:16px;margin:0 0 1.6rem}
-.ln::before,.ln::after{content:"";position:absolute;top:17px;width:11px;height:11px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#9a9aa3,#3a3a42);box-shadow:0 1px 3px #000b;z-index:3}
-.ln::before{left:-5px}.ln::after{right:-5px}
-.rope{position:absolute;left:0;top:16px;width:100%;height:48px;overflow:visible;z-index:0;pointer-events:none}
-.rope path{fill:none;stroke:#cdaa70;stroke-width:3.2;stroke-linecap:round;vector-effect:non-scaling-stroke;filter:drop-shadow(0 3px 2px #0009)}
-.rope path.tw{stroke:#7b5c2e;stroke-width:3.2;stroke-dasharray:2 7;filter:none}
 .lr{position:relative;z-index:1;display:grid;gap:1.1rem;align-items:start}
 .pl4{position:relative;margin-top:calc(var(--y,12px) - 4px);padding:.45rem .45rem .15rem;border-radius:3px;background:#fbf8f1;box-shadow:0 .6rem 1.1rem #000b;transform-origin:50% 0;transform:rotate(var(--r,0deg));transition:transform .25s,box-shadow .25s}
 .pl4:hover,.pl4:focus-within{transform:rotate(0) scale(1.04);z-index:5;box-shadow:0 .9rem 1.6rem #000d}
 .pl4 .po{display:block;width:100%;padding:0;border:0;background:none;color:inherit;cursor:pointer;text-align:left}
-.pl4 img{display:block;width:100%;aspect-ratio:4/3;object-fit:cover}
-.pl4.v img{aspect-ratio:3/4}
 .pl4 .cp{display:block;min-height:2.7em;padding:.3rem .4rem .15rem;text-align:center;font-family:Caveat,cursive;color:#3a2a1c}
 .cp b{display:block;font-size:1.12rem;font-weight:600;line-height:1.15;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .cp em{display:block;font-style:normal;font-size:.92rem;line-height:1.2;color:#7a6a58}
 .cp em.solo{font-size:1.12rem;font-weight:600;color:#3a2a1c}
 .pl4::before{content:"";position:absolute;top:-17px;left:50%;width:15px;height:36px;margin-left:-7.5px;border-radius:3px 3px 6px 6px;z-index:3;pointer-events:none;background:linear-gradient(90deg,#ecc895,#c8995c 42%,#a4723a 58%,#dcb47c);box-shadow:0 2px 4px #000a}
 .pl4::after{content:"";position:absolute;top:-3px;left:50%;width:15px;height:6px;margin-left:-7.5px;border-radius:2px;z-index:4;pointer-events:none;background:linear-gradient(#d4d4db,#7a7a84)}
+main.bleed{overflow-x:visible}
+.rw{position:absolute;left:50%;top:16px;width:100vw;margin-left:-50vw;height:48px;z-index:0;pointer-events:none}
+.rw svg{display:block;width:100%;height:100%;overflow:visible}
+.rw path{fill:none;stroke:#cdaa70;stroke-width:3.2;stroke-linecap:round;vector-effect:non-scaling-stroke;filter:drop-shadow(0 3px 2px #0009)}
+.rw path.tw{stroke:#7b5c2e;stroke-dasharray:2 7;filter:none}
+.rw::before,.rw::after{content:"";position:absolute;top:1px;width:11px;height:11px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#9a9aa3,#3a3a42);box-shadow:0 1px 3px #000b}
+.rw::before{left:8px}.rw::after{right:8px}
+.pm{display:block;position:relative;aspect-ratio:4/3;overflow:hidden;background:#1b1020}
+.pm img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain}
+.pm img.cv{object-fit:cover}
+.pm img.bg{inset:-10%;width:120%;height:120%;object-fit:cover;filter:blur(12px) brightness(.6) saturate(1.2)}
 </style>
 </head>
 <body>
@@ -573,6 +577,7 @@ function render(){
   document.querySelectorAll('nav a').forEach(a=>a.classList.toggle('active',a.getAttribute('href')==='#'+(h==='socials'?'socials':id)));
   document.querySelector('main').classList.toggle('wide',id==='setup');
   document.querySelector('main').classList.toggle('deco',id==='fotos');
+  document.querySelector('main').classList.toggle('bleed',id==='vrchat-bilder');
   if(id==='fotos'&&window.fotosDecor)setTimeout(window.fotosDecor,0);
   window.scrollTo(0,0);
   if(id==='gaming'&&!clipsLoaded)loadClips();
@@ -716,6 +721,16 @@ function phOpen(i){
   $('lb').hidden=false;document.body.style.overflow='hidden';
 }
 let vpN=0;
+function vpPlace(){
+  // Bilder hängen entlang des Durchhangs der Leine: Höhe der Leine an der Stelle jedes Bildes messen
+  document.querySelectorAll('#vpGrid .ln').forEach(ln=>{
+    const rr=ln.querySelector('.rw').getBoundingClientRect();if(!rr.width)return;
+    ln.querySelectorAll('.pl4').forEach(card=>{
+      const cr=card.getBoundingClientRect(),t=Math.min(1,Math.max(0,(cr.left+cr.width/2-rr.left)/rr.width));
+      card.style.setProperty('--y',(6+72*t*(1-t)).toFixed(1)+'px');
+    });
+  });
+}
 function vpRender(force){
   const g=$('vpGrid');if(!g)return;
   vpList=BILDER;
@@ -726,23 +741,25 @@ function vpRender(force){
   const ROT=[-1.4,1,-.8,1.3,-1.1];
   for(let r=0;r<vpList.length;r+=n){
     const ln=el('div','ln');
-    ln.insertAdjacentHTML('beforeend','<svg class="rope" viewBox="0 0 100 48" preserveAspectRatio="none" aria-hidden="true"><path d="M0 6Q50 42 100 6"/><path class="tw" d="M0 6Q50 42 100 6"/></svg>');
-    const cnt=Math.min(n,vpList.length-r);ln.style.width=(cnt/n*100)+'%';
-    const row=el('div','lr');row.style.gridTemplateColumns='repeat('+cnt+',minmax(0,1fr))';
+    ln.insertAdjacentHTML('beforeend','<div class="rw"><svg viewBox="0 0 100 48" preserveAspectRatio="none" aria-hidden="true"><path d="M0 6Q50 42 100 6"/><path class="tw" d="M0 6Q50 42 100 6"/></svg></div>');
+    const row=el('div','lr');row.style.gridTemplateColumns='repeat('+n+',minmax(0,1fr))';
     vpList.slice(r,r+n).forEach((p,c)=>{
-      const i=r+c,t=(c+.5)/cnt,card=el('div','pl4'+(p.h>p.w?' v':''));
-      card.style.setProperty('--y',(6+72*t*(1-t)).toFixed(1)+'px');card.style.setProperty('--r',ROT[i%5]+'deg');
+      const i=r+c,card=el('div','pl4');
+      card.style.setProperty('--r',ROT[i%5]+'deg');
       const b=el('button','po');b.type='button';b.setAttribute('aria-label',p.title||'Bild öffnen');
-      const im=el('img');im.src=p.thumb;im.alt=p.title||'';im.loading='lazy';
+      // einheitlicher 4:3-Rahmen: Bilder nahe 4:3 füllen ihn, alle anderen (16:9, Hochformat) zeigen sich ganz, mit unscharfem Hintergrund
+      const pm=el('span','pm'),ratio=(p.w&&p.h)?p.w/p.h:1.78,near=ratio>=1.2&&ratio<=1.5;
+      if(!near){const bg=el('img','bg');bg.src=p.thumb;bg.alt='';bg.loading='lazy';bg.setAttribute('aria-hidden','true');pm.append(bg)}
+      const im=el('img',near?'cv':'');im.src=p.thumb;im.alt=p.title||'';im.loading='lazy';pm.append(im);
       const cap=el('span','cp');if(p.title)cap.append(el('b',null,p.title));if(p.date)cap.append(el('em',p.title?null:'solo',fmtD(p.date)));
-      b.append(im,cap);
-      b.onclick=()=>{lbList=vpList;phOpen(i)};
+      b.append(pm,cap);b.onclick=()=>{lbList=vpList;phOpen(i)};
       card.append(b);row.append(card);
     });
     ln.append(row);g.append(ln);
   }
+  vpPlace();
 }
-(function(){let t;const later=()=>{clearTimeout(t);t=setTimeout(()=>vpRender(),80)};addEventListener('resize',later);
+(function(){let t;const later=()=>{clearTimeout(t);t=setTimeout(()=>{vpRender();vpPlace()},80)};addEventListener('resize',later);
   if(window.ResizeObserver)new ResizeObserver(later).observe($('vpGrid'))})();
 function phClose(){$('lb').hidden=true;$('lbImg').removeAttribute('src');document.body.style.overflow=''}
 $('lbX').onclick=phClose;$('lbP').onclick=()=>phOpen(phI-1);$('lbN').onclick=()=>phOpen(phI+1);
