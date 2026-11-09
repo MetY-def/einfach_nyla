@@ -289,7 +289,7 @@ main.deco{overflow-x:visible}
 /* VRChat-Bilder: Fotoleine mit Wäscheklammern */
 .vg{margin-top:1.4rem}.vg>p{margin:0}
 .ln{position:relative;padding-top:16px;margin:0 0 1.6rem}
-.lr{position:relative;z-index:1;display:grid;gap:1.1rem;align-items:start}
+.lr{position:relative;left:50%;transform:translateX(-50%);z-index:1;display:grid;gap:.9rem;align-items:start;width:min(98vw,1600px)}
 .pl4{position:relative;margin-top:calc(var(--y,12px) - 4px);padding:.45rem .45rem .15rem;border-radius:3px;background:#fbf8f1;box-shadow:0 .6rem 1.1rem #000b;transform-origin:50% 0;transform:rotate(var(--r,0deg));transition:transform .25s,box-shadow .25s}
 .pl4:hover,.pl4:focus-within{transform:rotate(0) scale(1.04);z-index:5;box-shadow:0 .9rem 1.6rem #000d}
 .pl4 .po{display:block;width:100%;padding:0;border:0;background:none;color:inherit;cursor:pointer;text-align:left}
@@ -734,7 +734,7 @@ function vpPlace(){
 function vpRender(force){
   const g=$('vpGrid');if(!g)return;
   vpList=BILDER;
-  const w=g.clientWidth||1000,n=Math.max(2,Math.min(6,Math.floor((w+16)/(176+16))));
+  const W=Math.min(document.documentElement.clientWidth*.98,1600),n=Math.max(2,Math.min(7,Math.floor((W+14)/(160+14))));
   if(!force&&n===vpN&&g.dataset.n===String(vpList.length))return;
   vpN=n;g.dataset.n=String(vpList.length);g.replaceChildren();
   if(!vpList.length){g.append(el('p',null,'Noch keine Bilder.'));return}
