@@ -1,6 +1,19 @@
 {
-  "updated": "2026-11-08T09:44:42",
+  "updated": "2026-11-09T13:27:41",
   "items": [
+    {
+      "id": "359dd30e",
+      "title": "Neuer Kontaktweg",
+      "text": "Hallu Mümmlis.\n\nAb sofort ist der https://discord.com/channels/1479466581812838440/1509844606488154263 Channel für persönliche Anfragen aktiviert!\n\nDa Nyla auf Discord keine privaten Nachrichten empfangen kann, habt ihr nun die Möglichkeit, Nyla über ein Privates Ticketsystem zu erreichen.\n\nEure Anfragen und Nachrichten bleiben Privat und können nur von [user] und Nyla gelesen werden!",
+      "link": "",
+      "link_label": "",
+      "image": "images/news/359dd30e-VRChat_2026-10-21_21-35-39.419_1920x1080.png",
+      "date": "2026-11-09",
+      "size": "large",
+      "category": "",
+      "pinned": true,
+      "pin_label": "Wichtig"
+    },
     {
       "id": "2036eb67",
       "title": "Bilder und Fotos",
