@@ -290,7 +290,7 @@ main.deco{overflow-x:visible}
 .vg{margin-top:1.4rem}.vg>p{margin:0}
 .ln{position:relative;padding-top:16px;margin:0 0 1.6rem}
 .lr{position:relative;left:50%;transform:translateX(-50%);z-index:1;display:grid;gap:.9rem;align-items:start;width:min(98vw,1600px)}
-.pl4{position:relative;margin-top:calc(var(--y,12px) - 4px);padding:.45rem .45rem .15rem;border-radius:3px;background:#fbf8f1;box-shadow:0 .6rem 1.1rem #000b;transform-origin:50% 0;transform:rotate(var(--r,0deg));transition:transform .25s,box-shadow .25s}
+.pl4{position:relative;margin-top:calc(var(--y,12px) - 4px + var(--j,0px));padding:.45rem .45rem .15rem;border-radius:3px;background:#fbf8f1;box-shadow:0 .6rem 1.1rem #000b;transform-origin:50% 0;transform:translateX(var(--dx,0px)) rotate(var(--r,0deg));transition:transform .25s,box-shadow .25s}
 .pl4:hover,.pl4:focus-within{transform:rotate(0) scale(1.04);z-index:5;box-shadow:0 .9rem 1.6rem #000d}
 .pl4 .po{display:block;width:100%;padding:0;border:0;background:none;color:inherit;cursor:pointer;text-align:left}
 .pl4 .cp{display:block;min-height:2.7em;padding:.3rem .4rem .15rem;text-align:center;font-family:Caveat,cursive;color:#3a2a1c}
@@ -300,7 +300,7 @@ main.deco{overflow-x:visible}
 .pl4::before{content:"";position:absolute;top:-17px;left:50%;width:15px;height:36px;margin-left:-7.5px;border-radius:3px 3px 6px 6px;z-index:3;pointer-events:none;background:linear-gradient(90deg,#ecc895,#c8995c 42%,#a4723a 58%,#dcb47c);box-shadow:0 2px 4px #000a}
 .pl4::after{content:"";position:absolute;top:-3px;left:50%;width:15px;height:6px;margin-left:-7.5px;border-radius:2px;z-index:4;pointer-events:none;background:linear-gradient(#d4d4db,#7a7a84)}
 main.bleed{overflow-x:visible}
-.rw{position:absolute;left:50%;top:16px;width:100vw;margin-left:-50vw;height:48px;z-index:0;pointer-events:none}
+.rw{position:absolute;left:50%;top:16px;width:100vw;margin-left:-50vw;height:60px;z-index:0;pointer-events:none}
 .rw svg{display:block;width:100%;height:100%;overflow:visible}
 .rw path{fill:none;stroke:#cdaa70;stroke-width:3.2;stroke-linecap:round;vector-effect:non-scaling-stroke;filter:drop-shadow(0 3px 2px #0009)}
 .rw path.tw{stroke:#7b5c2e;stroke-dasharray:2 7;filter:none}
@@ -722,15 +722,17 @@ function phOpen(i){
 }
 let vpN=0;
 function vpPlace(){
-  // Bilder hängen entlang des Durchhangs der Leine: Höhe der Leine an der Stelle jedes Bildes messen
+  // Bilder hängen entlang der Leine: Höhe der Leine an der Stelle jedes Bildes (jede Reihe hat eigenen Durchhang und leichte Schräge)
   document.querySelectorAll('#vpGrid .ln').forEach(ln=>{
     const rr=ln.querySelector('.rw').getBoundingClientRect();if(!rr.width)return;
+    const yl=+ln.dataset.yl,yr=+ln.dataset.yr,c=+ln.dataset.c;
     ln.querySelectorAll('.pl4').forEach(card=>{
-      const cr=card.getBoundingClientRect(),t=Math.min(1,Math.max(0,(cr.left+cr.width/2-rr.left)/rr.width));
-      card.style.setProperty('--y',(6+72*t*(1-t)).toFixed(1)+'px');
+      const cr=card.getBoundingClientRect(),t=Math.min(1,Math.max(0,(cr.left+cr.width/2-rr.left)/rr.width)),u=1-t;
+      card.style.setProperty('--y',(u*u*yl+2*u*t*c+t*t*yr).toFixed(1)+'px');
     });
   });
 }
+const vrnd=k=>{const x=Math.sin(k*12.9898+78.233)*43758.5453;return x-Math.floor(x)};
 function vpRender(force){
   const g=$('vpGrid');if(!g)return;
   vpList=BILDER;
@@ -738,14 +740,18 @@ function vpRender(force){
   if(!force&&n===vpN&&g.dataset.n===String(vpList.length))return;
   vpN=n;g.dataset.n=String(vpList.length);g.replaceChildren();
   if(!vpList.length){g.append(el('p',null,'Noch keine Bilder.'));return}
-  const ROT=[-1.4,1,-.8,1.3,-1.1];
+  const AMP=[2.3,3.5,1.7,3],SAG=[18,12,22,15],YL=[6,13,5,10],YR=[7,5,14,8];
   for(let r=0;r<vpList.length;r+=n){
-    const ln=el('div','ln');
-    ln.insertAdjacentHTML('beforeend','<div class="rw"><svg viewBox="0 0 100 48" preserveAspectRatio="none" aria-hidden="true"><path d="M0 6Q50 42 100 6"/><path class="tw" d="M0 6Q50 42 100 6"/></svg></div>');
+    const ln=el('div','ln'),k=(r/n)%4,yl=YL[k],yr=YR[k],cc=(yl+yr)/2+2*SAG[k];
+    ln.dataset.yl=yl;ln.dataset.yr=yr;ln.dataset.c=cc;
+    ln.insertAdjacentHTML('beforeend',`<div class="rw"><svg viewBox="0 0 100 60" preserveAspectRatio="none" aria-hidden="true"><path d="M0 ${yl}Q50 ${cc} 100 ${yr}"/><path class="tw" d="M0 ${yl}Q50 ${cc} 100 ${yr}"/></svg></div>`);
     const row=el('div','lr');row.style.gridTemplateColumns='repeat('+n+',minmax(0,1fr))';
     vpList.slice(r,r+n).forEach((p,c)=>{
       const i=r+c,card=el('div','pl4');
-      card.style.setProperty('--r',ROT[i%5]+'deg');
+      let a=(vrnd(i*3+1)*2-1)*AMP[k];if(Math.abs(a)<.8)a=a<0?-.8:.8;
+      card.style.setProperty('--r',a.toFixed(2)+'deg');
+      card.style.setProperty('--j',(vrnd(i*5+2)*9).toFixed(1)+'px');
+      card.style.setProperty('--dx',((vrnd(i*7+3)-.5)*12).toFixed(1)+'px');
       const b=el('button','po');b.type='button';b.setAttribute('aria-label',p.title||'Bild öffnen');
       // einheitlicher 4:3-Rahmen: Bilder nahe 4:3 füllen ihn, alle anderen (16:9, Hochformat) zeigen sich ganz, mit unscharfem Hintergrund
       const pm=el('span','pm'),ratio=(p.w&&p.h)?p.w/p.h:1.78,near=ratio>=1.2&&ratio<=1.5;
