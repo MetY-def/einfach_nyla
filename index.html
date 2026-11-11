@@ -293,7 +293,7 @@ main.deco{overflow-x:visible}
 .pl4{position:relative;margin-top:calc(var(--y,12px) - 4px + var(--j,0px));padding:.45rem .45rem .15rem;border-radius:3px;background:#fbf8f1;box-shadow:0 .6rem 1.1rem #000b;transform-origin:50% 0;transform:translateX(var(--dx,0px)) rotate(var(--r,0deg));transition:transform .25s,box-shadow .25s}
 .pl4:hover,.pl4:focus-within{transform:rotate(0) scale(1.04);z-index:5;box-shadow:0 .9rem 1.6rem #000d}
 .pl4 .po{display:block;width:100%;padding:0;border:0;background:none;color:inherit;cursor:pointer;text-align:left}
-.pl4 .cp{display:block;min-height:2.7em;padding:.3rem .4rem .15rem;text-align:center;font-family:Caveat,cursive;color:#3a2a1c}
+.pl4 .cp{display:block;min-height:2.7em;padding:.3rem 1.6rem .15rem;text-align:center;font-family:Caveat,cursive;color:#3a2a1c}
 .cp b{display:block;font-size:1.12rem;font-weight:600;line-height:1.15;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .cp em{display:block;font-style:normal;font-size:.92rem;line-height:1.2;color:#7a6a58}
 .cp em.solo{font-size:1.12rem;font-weight:600;color:#3a2a1c}
@@ -309,6 +309,16 @@ main.bleed{overflow-x:visible}
 .pm img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain}
 .pm img.cv{object-fit:cover}
 .pm img.bg{inset:-10%;width:120%;height:120%;object-fit:cover;filter:blur(12px) brightness(.6) saturate(1.2)}
+.hb{display:inline-flex;align-items:center;gap:.25rem;padding:.1rem .3rem;border:0;background:none;cursor:pointer;color:#c4b2d6;font-size:1.15rem;line-height:1;transition:transform .15s,color .15s}
+.hb:hover{transform:scale(1.18)}
+.hb i{font-style:normal}
+.hb b{font-family:Orbitron,sans-serif;font-size:.6rem;font-weight:500}
+.hb.on{color:#ff4fa3}
+.pl4 .hb{position:absolute;right:.3rem;bottom:.2rem;z-index:6;color:#a5927f}
+.pl4 .hb.on{color:#e8337f}
+.lb .hb.lbh{margin-top:.5rem;font-size:1.9rem;color:#f4e6ee}
+.lb .hb.lbh.on{color:#ff4fa3}
+.lb .hb.lbh b{font-size:.8rem}
 </style>
 </head>
 <body>
@@ -658,6 +668,35 @@ au.onended=()=>step(1);
 au.onerror=()=>{$('npMsg').textContent='Diese Datei konnte nicht geladen werden.'};
 initSets();
 
+/* ---- Herzen: "Gefällt mir" (Zähler bei Cloudflare, Sicherung in data/likes.json) ---- */
+const LIKES_URL='';   // Adresse des Cloudflare-Workers, z. B. 'https://nyla-likes.DEINNAME.workers.dev' (ohne / am Ende). Leer = nur Anzeige aus data/likes.json
+let LIKED=new Set(),LC={};
+try{LIKED=new Set(JSON.parse(localStorage.getItem('nylaLikes')||'[]'))}catch(e){}
+function heartBtn(p){
+  const b=el('button','hb');b.type='button';b._p=p;
+  b._upd=()=>{
+    const q=b._p;if(!q)return;const on=LIKED.has(q.id),n=LC[q.id]||0;
+    b.classList.toggle('on',on);b.setAttribute('aria-pressed',String(on));
+    b.setAttribute('aria-label',on?'Gefällt mir zurücknehmen':'Gefällt mir');
+    b.replaceChildren(el('i',null,on?'\u2665':'\u2661'));
+    if(n>0)b.append(el('b',null,String(n)));
+  };
+  b.onclick=e=>{e.stopPropagation();const q=b._p;if(!q)return;
+    const on=!LIKED.has(q.id);on?LIKED.add(q.id):LIKED.delete(q.id);
+    try{localStorage.setItem('nylaLikes',JSON.stringify([...LIKED]))}catch(err){}
+    if(LIKES_URL){LC[q.id]=Math.max(0,(LC[q.id]||0)+(on?1:-1));
+      fetch(LIKES_URL+'/like',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({id:q.id,on})}).catch(()=>{})}
+    refreshHearts()};
+  b._upd();return b;
+}
+function refreshHearts(){document.querySelectorAll('.hb').forEach(b=>b._upd&&b._upd())}
+const lbH=heartBtn(null);lbH.classList.add('lbh');$('lbCap').insertAdjacentElement('afterend',lbH);
+async function loadLikes(){
+  if(LIKES_URL){try{const r=await fetch(LIKES_URL+'/likes',{cache:'no-store'});if(r.ok){LC=await r.json();refreshHearts();return}}catch(e){}}
+  try{const r=await fetch('data/likes.json',{cache:'no-store'});if(r.ok){LC=(await r.json()).likes||{};refreshHearts()}}catch(e){}
+}
+loadLikes();
+
 /* ---- Fotos: Galerie mit Alben und Großansicht ---- */
 let PH=[],FOTOS=[],BILDER=[],phAlbum='',phList=[],phI=-1,lbList=[],vpList=[];
 function phChips(){
@@ -715,7 +754,7 @@ function phRender(){
 function phOpen(i){
   if(!lbList.length) return;
   phI=(i+lbList.length)%lbList.length;const p=lbList[phI];
-  $('lbImg').src=p.image;$('lbImg').alt=p.title||'';
+  $('lbImg').src=p.image;$('lbImg').alt=p.title||'';lbH._p=p;lbH._upd();
   $('lbCap').textContent=[p.title,p.album,p.date?fmtD(p.date):''].filter(Boolean).join(' · ');
   $('lb').hidden=false;document.body.style.overflow='hidden';
 }
@@ -766,7 +805,7 @@ function vpRender(force){
       const im=el('img',near?'cv':'');im.src=p.thumb;im.alt=p.title||'';im.loading='lazy';pm.append(im);
       const cap=el('span','cp');if(p.title)cap.append(el('b',null,p.title));if(p.date)cap.append(el('em',p.title?null:'solo',fmtD(p.date)));
       b.append(pm,cap);b.onclick=()=>{lbList=vpList;phOpen(i)};
-      card.prepend(b);row.append(card);
+      card.prepend(b);card.append(heartBtn(p));row.append(card);
     });
     ln.append(row);g.append(ln);
   }
