@@ -1,0 +1,55 @@
+name: Herzen sichern
+
+on:
+  schedule:
+    - cron: "23 * * * *"   # jede Stunde (UTC)
+  workflow_dispatch:       # zusätzlich per Knopf startbar
+
+permissions:
+  contents: write
+
+concurrency:
+  group: sync-likes
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Herzen vom Zähler abrufen und in data/likes.json speichern
+        env:
+          LIKES_URL: ${{ vars.LIKES_URL }}
+        run: |
+          if [ -z "$LIKES_URL" ]; then echo "Variable LIKES_URL fehlt (Settings > Secrets and variables > Actions > Variables)"; exit 1; fi
+          curl -fsS "$LIKES_URL/likes" -o /tmp/likes.json
+          python3 - <<'PY'
+          import json, os, datetime
+          neu = json.load(open("/tmp/likes.json"))
+          pfad = "data/likes.json"
+          alt = {}
+          if os.path.exists(pfad):
+              alt = json.load(open(pfad)).get("likes", {})
+          if neu == alt:
+              print("Keine neuen Herzen.")
+          else:
+              os.makedirs("data", exist_ok=True)
+              doc = {"updated": datetime.datetime.now(datetime.timezone.utc).isoformat(timespec="seconds"),
+                     "likes": dict(sorted(neu.items()))}
+              json.dump(doc, open(pfad, "w"), ensure_ascii=False, indent=2)
+              print("Gespeichert:", len(neu), "Bilder mit Herzen")
+          PY
+
+      - name: Änderungen speichern
+        run: |
+          if git diff --quiet -- data/likes.json; then
+            echo "Nichts zu speichern."
+          else
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add data/likes.json
+            git commit -m "Herzen automatisch gesichert"
+            git pull --rebase
+            git push
+          fi
