@@ -672,7 +672,7 @@ au.onerror=()=>{$('npMsg').textContent='Diese Datei konnte nicht geladen werden.
 initSets();
 
 /* ---- Herzen: "Gefällt mir" (Zähler bei Cloudflare, Sicherung in data/likes.json) ---- */
-const LIKES_URL='';   // Adresse des Cloudflare-Workers, z. B. 'https://nyla-likes.DEINNAME.workers.dev' (ohne / am Ende). Leer = nur Anzeige aus data/likes.json
+const LIKES_URL='https://nyla-likes.einfachxmarla.workers.dev';   // Adresse des Cloudflare-Workers, z. B. 'https://nyla-likes.DEINNAME.workers.dev' (ohne / am Ende). Leer = nur Anzeige aus data/likes.json
 let LIKED=new Set(),LC={};
 try{LIKED=new Set(JSON.parse(localStorage.getItem('nylaLikes')||'[]'))}catch(e){}
 function heartBtn(p){
