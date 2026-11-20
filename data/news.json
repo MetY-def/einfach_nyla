@@ -1,19 +1,6 @@
 {
-  "updated": "2026-11-17T14:10:52",
+  "updated": "2026-11-20T07:32:08",
   "items": [
-    {
-      "id": "3721e8ad",
-      "title": "Gaming",
-      "text": "Heute um 16:00 Uhr startet der Stream mit Miside.",
-      "link": "",
-      "link_label": "",
-      "image": "images/news/3721e8ad-20261117140953_1.jpg",
-      "date": "2026-11-17",
-      "size": "small",
-      "category": "gaming",
-      "pinned": false,
-      "pin_label": "Wichtig"
-    },
     {
       "id": "359dd30e",
       "title": "Neuer Kontaktweg",
