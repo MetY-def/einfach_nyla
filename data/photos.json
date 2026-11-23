@@ -1,6 +1,28 @@
 {
-  "updated": "2026-11-20T23:09:07",
+  "updated": "2026-11-23T21:44:27",
   "photos": [
+    {
+      "id": "261123-ab82f2",
+      "title": "",
+      "album": "",
+      "date": "2026-11-23",
+      "thumb": "images/fotos/261123-ab82f2-t.webp",
+      "image": "images/fotos/261123-ab82f2.webp",
+      "w": 520,
+      "h": 293,
+      "section": "bilder"
+    },
+    {
+      "id": "261123-9fe84e",
+      "title": "",
+      "album": "",
+      "date": "2026-11-23",
+      "thumb": "images/fotos/261123-9fe84e-t.webp",
+      "image": "images/fotos/261123-9fe84e.webp",
+      "w": 520,
+      "h": 293,
+      "section": "bilder"
+    },
     {
       "id": "261120-ce528e",
       "title": "",
