@@ -682,8 +682,15 @@ initSets();
 
 /* ---- Herzen: "Gefällt mir" (Zähler bei Cloudflare, Sicherung in data/likes.json) ---- */
 const LIKES_URL='https://nyla-likes.einfachxmarla.workers.dev';   // Adresse des Cloudflare-Workers (ohne / am Ende)
-let LIKED=new Set(),LC={};
+let LIKED=new Set(),LC={},LREADY=false,RECENT={};
 try{LIKED=new Set(JSON.parse(localStorage.getItem('nylaLikes')||'[]'))}catch(e){}
+try{const c=JSON.parse(localStorage.getItem('nylaLC')||'null');if(c&&typeof c==='object'){LC=c;LREADY=true}}catch(e){}   // zuletzt gesehene Zahlen sofort anzeigen
+try{RECENT=JSON.parse(localStorage.getItem('nylaRecent')||'{}')}catch(e){}
+applyRecent();   // eigene frische Zahlen gleich beim Start berücksichtigen
+const saveLC=()=>{try{localStorage.setItem('nylaLC',JSON.stringify(LC))}catch(e){}};
+// Der Zähler braucht bis zu einer Minute, bis eine neue Zahl überall ankommt: eigene, frische Zahlen haben deshalb Vorrang
+function applyRecent(){const now=Date.now();for(const id in RECENT){if(now-RECENT[id].t<120000)LC[id]=RECENT[id].n;else delete RECENT[id]}
+  try{localStorage.setItem('nylaRecent',JSON.stringify(RECENT))}catch(e){}}
 function toast(msg){
   const t=el('div','toast',msg);document.body.append(t);setTimeout(()=>t.remove(),3500);
 }
@@ -698,7 +705,7 @@ function heartBtn(p){
     const q=b._p;if(!q)return;const on=LIKED.has(q.id),n=LC[q.id]||0;
     b.classList.toggle('on',on);b.setAttribute('aria-pressed',String(on));
     b.setAttribute('aria-label',on?'Gefällt mir zurücknehmen':'Gefällt mir');
-    b.replaceChildren(el('b',null,String(n)),el('i',null,on?'\u2665':'\u2661'));
+    b.replaceChildren(...(LREADY?[el('b',null,String(n))]:[]),el('i',null,on?'\u2665':'\u2661'));
   };
   b.onclick=async e=>{
     e.stopPropagation();const q=b._p;if(!q||b._busy)return;
@@ -707,20 +714,22 @@ function heartBtn(p){
     try{
       const r=await fetch(LIKES_URL+'/like',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({id:q.id,on})});
       if(!r.ok)throw new Error('HTTP '+r.status);
-      const j=await r.json();if(typeof j.count==='number')LC[q.id]=j.count;   // echte Zahl vom Zähler übernehmen
+      const j=await r.json();
+      if(typeof j.count==='number'){LC[q.id]=j.count;RECENT[q.id]={n:j.count,t:Date.now()};try{localStorage.setItem('nylaRecent',JSON.stringify(RECENT))}catch(e){}}   // echte Zahl vom Zähler übernehmen
     }catch(err){
       setLike(q.id,!on);                        // nicht gespeichert -> zurücksetzen und Bescheid sagen
       toast('Das Herz konnte gerade nicht gespeichert werden.');
     }
-    b._busy=false;refreshHearts();
+    b._busy=false;saveLC();refreshHearts();
   };
   b._upd();return b;
 }
 function refreshHearts(){document.querySelectorAll('.hb').forEach(b=>b._upd&&b._upd())}
 const lbH=heartBtn(null);lbH.classList.add('lbh');$('lbCap').insertAdjacentElement('afterend',lbH);
 async function loadLikes(){
-  try{const r=await fetch(LIKES_URL+'/likes',{cache:'no-store'});if(r.ok){const j=await r.json();if(j&&!j.fehler){LC=j;refreshHearts();return}}}catch(e){}
-  try{const r=await fetch('data/likes.json',{cache:'no-store'});if(r.ok){LC=(await r.json()).likes||{};refreshHearts()}}catch(e){}
+  try{const r=await fetch(LIKES_URL+'/likes',{cache:'no-store'});if(r.ok){const j=await r.json();if(j&&!j.fehler){LC=j;applyRecent();LREADY=true;saveLC();refreshHearts();return}}}catch(e){}
+  try{const r=await fetch('data/likes.json',{cache:'no-store'});if(r.ok){LC=(await r.json()).likes||{};applyRecent()}}catch(e){}
+  LREADY=true;refreshHearts();
 }
 loadLikes();
 
